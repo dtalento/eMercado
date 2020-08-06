@@ -40,6 +40,37 @@ var getJSONData = function(url){
     });
 }
 
+var checkLogIn = function(){
+  let isLoggedIn = sessionStorage.getItem("loginFlag");//loginFlag = true si se esta loggeado 
+  let currentPage = window.location.href.split("/").pop() // ruta realtiva pagina actual 
+
+  // checkeo si ya existen la flag sino la declaro
+  if (isLoggedIn == undefined){ isLoggedIn = "false"; }
+
+  //Si el usuario no inicio sesión  y no se encuentra en el login
+  //recorar la página y redirigir al login
+  if (isLoggedIn == "false" & currentPage != "login.html"){
+    sessionStorage.setItem("preLogInPage", window.location.href);
+    window.location.href = "login.html";
+  }
+}
+
+var logInDone = function(){
+ //Luego del log in volver a la página pedida antes de la redirección
+ // si esta no era la actual, sino volver al index
+ 
+  sessionStorage.setItem("loginFlag", "true");
+  if(sessionStorage.getItem("preLogInPage") == window.location.href) 
+  {
+    window.location.href = "index.html";
+  } else {
+    window.location.href = sessionStorage.getItem("preLogInPage");  
+  }
+}
+
+//checkeo que este loggeado antes de cargar la página requerida
+checkLogIn();
+
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
