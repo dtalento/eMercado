@@ -42,29 +42,16 @@ var getJSONData = function(url){
 
 var checkLogIn = function(){
   let isLoggedIn = sessionStorage.getItem("loginFlag");//loginFlag = true si se esta loggeado 
-  let currentPage = window.location.href.split("/").pop() // ruta realtiva pagina actual 
+  let isPageLogin = window.location.href.endsWith("login.html") // true si estas en login 
 
-  // checkeo si ya existen la flag sino la declaro
+  // checkeo si ya existe la flag sino la declaro
   if (isLoggedIn == undefined){ isLoggedIn = "false"; }
 
   //Si el usuario no inicio sesión  y no se encuentra en el login
-  //recorar la página y redirigir al login
-  if (isLoggedIn == "false" & currentPage != "login.html"){
+  //guardar ruta de la página y redirigir al login
+  if ( (isLoggedIn !== "true") && (!isPageLogin) ){
     sessionStorage.setItem("preLogInPage", window.location.href);
     window.location.href = "login.html";
-  }
-}
-
-var logInDone = function(){
- //Luego del log in volver a la página pedida antes de la redirección
- // si esta no era la actual, sino volver al index
- 
-  sessionStorage.setItem("loginFlag", "true");
-  if(sessionStorage.getItem("preLogInPage") == window.location.href) 
-  {
-    window.location.href = "index.html";
-  } else {
-    window.location.href = sessionStorage.getItem("preLogInPage");  
   }
 }
 
