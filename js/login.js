@@ -18,11 +18,19 @@ var logInRedirect = function(){
     }
 }
 
-var logInVerification = function(){
+var logInValidation = function(){
   loginForm = document.getElementById("login-form");
   loginForm.addEventListener("submit", function(event){
     event.preventDefault();
-    logInDone();
+    
+    //Validacion de los datos de la forma
+    if (loginForm.usuario.value !== "" && loginForm.pwd.value !== ""){
+      //Accion en caso de datos validos
+      logInDone();
+    } else {
+      //Accion en caso de datos invalidos
+    }
+
   })
 }
 
@@ -32,5 +40,5 @@ logInRedirect();
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e){
-  logInVerification();
+  logInValidation();
 });
