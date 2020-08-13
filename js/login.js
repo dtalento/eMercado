@@ -10,6 +10,46 @@ var logInDone = function(event){
   }
 }
 
+var onGoogleLoad = function () {
+  //Setup Google OAuth2 cuando cargue la api (que esta en el head)
+  gapi.load('auth2', function () {
+    googleAuth = gapi.auth2.init({
+      client_id: '248596847490-dldboe8r0m1qodiem693m103clqdi4qo.apps.googleusercontent.com',
+      scope: 'profile email', 
+      redirect_uri: 'products.html'
+    });
+
+    //Dibujar el boton en div con id="google_button"
+    gapi.signin2.render("google-button", {
+      scope: 'profile email',
+      //las mismas dimensiones que el botón submit
+      width:  document.getElementById("submit-button").getBoundingClientRect().width, 
+      height: document.getElementById("submit-button").getBoundingClientRect().height,
+      longtitle: true,
+      theme: 'dark',
+      onsuccess: onGoogleSignIn,
+    });
+
+  });
+}
+
+
+var onGoogleSignIn = function(){
+  /* 
+    Placeholder para obtener los datos
+    var profile = googleUser.getBasicProfile();
+    console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+    console.log('Full Name: ' + profile.getName());
+    console.log("Image URL: " + profile.getImageUrl());
+    console.log("Email: " + profile.getEmail());
+    
+    // The ID token you need to pass to your backend:
+    var id_token = googleUser.getAuthResponse().id_token;
+    console.log("ID Token: " + id_token);
+  */
+  logInDone();
+}
+
 var logInRedirect = function(){
   //Si volvemos al login luego de estar loggeados ir al index
   if (window.location.href.endsWith("login.html") &&
@@ -35,7 +75,6 @@ var logInValidation = function(){
 }
 
 logInRedirect();
-
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.

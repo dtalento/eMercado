@@ -42,7 +42,7 @@
     <div class="row">
 
       <div class="col-sm-4"></div>
-      <div class="col-sm-4">
+      <div id="form-container" class="col-sm-4">
         <form action="" method="POST" id="login-form" class="form-signin">
             <img src="img/login.png" width="100%">
             <hr>
@@ -54,13 +54,16 @@
               <input id="pwd" class="form-control" type="password" name="pwd" placeholder="Contraseña" required>
             </fieldset>
             <br>
-              <input type="submit" value="Iniciar sesión" class="btn btn-primary btn-block">
+              <input id="submit-button" type="submit" value="Iniciar sesión" class="btn btn-primary btn-block">
         </form>
+        <br><div id="google-button"></div>
       </div>
     </div>
   </div>
 
   <script src="js/init.js"></script>
   <script src="js/login.js"></script>
+  <!-- Google OAuth2 api: llama a onGoogleLoad cuando carga-->
+  <script src="https://apis.google.com/js/platform.js?onload=onGoogleLoad" async defer></script>
 </body>
 </html>
