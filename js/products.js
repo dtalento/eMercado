@@ -40,6 +40,12 @@ function productFilter(productArray){
     }
 }
 
+function clearRangeFilter(){
+    document.getElementById("rangeFilterCountMin").value = "";
+    document.getElementById("rangeFilterCountMax").value = "";
+    showProductList();
+}
+
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
@@ -52,4 +58,5 @@ document.addEventListener("DOMContentLoaded", function (e) {
     });
 
     document.getElementById("rangeFilterCount").addEventListener("click", showProductList);
+    document.getElementById("clearRangeFilter").addEventListener("click", clearRangeFilter);
 });
