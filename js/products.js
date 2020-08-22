@@ -1,8 +1,12 @@
-function showProductList(array){
+productArray = [];
+
+function showProductList(){
+
+    filteredArray = productFilter(productArray);
 
     let htmlContentToAppend = "";
-    for(let i = 0; i < array.length; i++){
-        let product = array[i];
+    for(let i = 0; i < filteredArray.length; i++){
+        let product = filteredArray[i];
 
         htmlContentToAppend += `
         <div class="list-group-item list-group-item-action">
@@ -20,8 +24,19 @@ function showProductList(array){
             </div>
         </div>
         `
+    }
+    document.getElementById("product-list").innerHTML = htmlContentToAppend;
+}
 
-        document.getElementById("product-list").innerHTML = htmlContentToAppend;
+function productFilter(productArray){
+    let filterMin = document.getElementById("rangeFilterCountMin").value;
+    let filterMax = document.getElementById("rangeFilterCountMax").value;
+    
+    if ( (filterMax !== "") && (filterMin !== "") ){
+        return productArray.filter(arrayElement => 
+            (arrayElement.cost >= filterMin) && (arrayElement.cost <= filterMax) );
+    } else {
+        return productArray;
     }
 }
 
@@ -36,4 +51,5 @@ document.addEventListener("DOMContentLoaded", function (e) {
         }
     });
 
+    document.getElementById("rangeFilterCount").addEventListener("click", showProductList);
 });
