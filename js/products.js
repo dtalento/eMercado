@@ -1,12 +1,14 @@
-productArray = [];
+let productArray = [];
+let orderID = "REL";
 
 function showProductList(){
 
     filteredArray = productFilter(productArray);
+    sortFiltArray = sortProducts(filteredArray);
 
     let htmlContentToAppend = "";
-    for(let i = 0; i < filteredArray.length; i++){
-        let product = filteredArray[i];
+    for(let i = 0; i < sortFiltArray.length; i++){
+        let product = sortFiltArray[i];
 
         htmlContentToAppend += `
         <div class="list-group-item list-group-item-action">
@@ -46,6 +48,16 @@ function clearRangeFilter(){
     showProductList();
 }
 
+function sortProducts(productArray){
+    if (orderID === "ASC"){
+        return productArray.sort( (a,b) => a.cost - b.cost); //precio ascendente
+    } else if (orderID === "DSC"){
+        return productArray.sort( (a,b) => b.cost - a.cost); //precio descendente
+    } else {
+        return productArray.sort( (a,b) => b.soldCount - a.soldCount); //default: relevancia
+    }
+}
+
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
@@ -59,4 +71,16 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
     document.getElementById("rangeFilterCount").addEventListener("click", showProductList);
     document.getElementById("clearRangeFilter").addEventListener("click", clearRangeFilter);
+    document.getElementById("sortRelevant").addEventListener("click", function(){
+        orderID = "REL" ;
+        showProductList();
+    });
+    document.getElementById("sortAsc").addEventListener("click", function(){
+        orderID = "ASC" ;
+        showProductList();
+    });
+    document.getElementById("sortDesc").addEventListener("click", function(){
+        orderID = "DSC" ;
+        showProductList();
+    });
 });
