@@ -3,9 +3,10 @@ let orderID = "REL";
 
 function showProductList(){
 
-    filteredArray = productFilter(productArray);
-    sortFiltArray = sortProducts(filteredArray);
-
+    let filteredArray = productFilter(productArray);
+    let searchFiltArray = searchProduct(filteredArray);
+    let sortFiltArray = sortProducts(searchFiltArray);
+    
     let htmlContentToAppend = "";
     for(let i = 0; i < sortFiltArray.length; i++){
         let product = sortFiltArray[i];
@@ -61,6 +62,17 @@ function sortProducts(productArray){
     }
 }
 
+function searchProduct(array){
+    /* Usamos string.search() para buscar con regex en el nombre y descripcion
+    Se usa toUpperCase() para que sea ignorar si hay mayusculas (case insensitive)*/
+    let searchText = document.getElementById("searchfield").value.toUpperCase();
+    return array.filter(element => {
+        let name = element.name.toUpperCase();
+        let desc = element.description.toUpperCase();
+        // search devuelve -1 si no hay coincidencia y un int >0 si la hay
+        return (desc.search(searchText) > -1)  || (name.search(searchText) > -1) 
+    })
+}
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
@@ -86,4 +98,5 @@ document.addEventListener("DOMContentLoaded", function (e) {
         orderID = "DSC" ;
         showProductList();
     });
+    document.getElementById("searchfield").addEventListener("keyup", showProductList);
 });

@@ -45,33 +45,44 @@
               </div>
           </div>
       </div>
+      
       <div class="row justify-content-end">
-        <div class="col-md-6"></div>
-          <div class="col-md-6 col-sm-12 mb-1 container">
-            <div class="row container p-0 m-0">
-              
-              <div class="col">
-                <p class="font-weight-normal text-right my-2">Costo</p>
-              </div>
-              
-              <div class="col">
-                <input class="form-control" type="number" placeholder="min." min="0" value="" id="rangeFilterCountMin">
-              </div>
-              
-              <div class="col">
-                <input class="form-control" type="number" placeholder="máx." min="0" value="" id="rangeFilterCountMax">
-              </div>
-              
-              <div class="col-3 p-0">
-                <div class="btn-group" role="group">
-                  <button class="btn btn-light btn-block" id="rangeFilterCount">Filtrar</button>
-                  <button class="btn btn-link btn-sm" id="clearRangeFilter">Limpiar</button>
-                </div>
-              </div>
-
-            </div>
+        
+        <div class="col-md-3">
+          <div class="col">
+            <input class="form-control" type="search" placeholder="Buscar" value="" id="searchfield">
           </div>
+        </div>
+
+        <div class="col-md-3"></div>
+
+        <div class="col-md-6 col-sm-12 mb-1 container">
+          <div class="row container p-0 m-0">
+            
+            <div class="col">
+              <p class="font-weight-normal text-right my-2">Costo</p>
+            </div>
+            
+            <div class="col">
+              <input class="form-control" type="number" placeholder="min." min="0" value="" id="rangeFilterCountMin">
+            </div>
+            
+            <div class="col">
+              <input class="form-control" type="number" placeholder="máx." min="0" value="" id="rangeFilterCountMax">
+            </div>
+            
+            <div class="col-3 p-0">
+              <div class="btn-group" role="group">
+                <button class="btn btn-light btn-block" id="rangeFilterCount">Filtrar</button>
+                <button class="btn btn-link btn-sm" id="clearRangeFilter">Limpiar</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      
       </div>
+      
       <div class="row">
           <div id="product-list" class="list-group"></div> <!--aqui se muestran los productos-->
       </div>
