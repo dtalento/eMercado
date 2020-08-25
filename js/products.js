@@ -63,14 +63,14 @@ function sortProducts(productArray){
 }
 
 function searchProduct(array){
-    /* Usamos string.search() para buscar con regex en el nombre y descripcion
+    /* Usamos string.includes() para buscar en el nombre y descripcion
     Se usa toUpperCase() para que sea ignorar si hay mayusculas (case insensitive)*/
     let searchText = document.getElementById("searchfield").value.toUpperCase();
     return array.filter(element => {
         let name = element.name.toUpperCase();
         let desc = element.description.toUpperCase();
-        // search devuelve -1 si no hay coincidencia y un int >0 si la hay
-        return (desc.search(searchText) > -1)  || (name.search(searchText) > -1) 
+        
+        return name.includes(searchText) || desc.includes(searchText) 
     })
 }
 //Función que se ejecuta una vez que se haya lanzado el evento de
