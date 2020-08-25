@@ -1,7 +1,10 @@
-var logInDone = function(event){
+var logInDone = function(userData){
+  //guardar el nombre de usuario actual y setear la login flag
+  sessionStorage.setItem("currentUser", userData.username);
+  sessionStorage.setItem("loginFlag", "true"); 
+  
   //Luego del log in volver a la página pedida antes de la redirección
   // si esta no era la actual, sino volver al index
-  sessionStorage.setItem("loginFlag", "true");
   if (sessionStorage.getItem("preLogInPage") == window.location.href) 
   {
     window.location.href = "index.html" ;
@@ -25,14 +28,50 @@ var logInValidation = function(){
     
     //Validacion de los datos de la forma
     if (loginForm.usuario.value !== "" && loginForm.pwd.value !== ""){
-      //Accion en caso de datos validos
-      logInDone();
-    } else {
-      //Accion en caso de datos invalidos
-    }
+      //Accion en caso de datos no vacios
+      let userData = {
+        username : loginForm.usuario.value ,
+        password : loginForm.pwd.value ,
+      }
 
+      if (localStorage.getItem("userRegister") === null){
+        //en caso de que no haya un registro crearlo
+        localStorage.setItem( "userRegister", JSON.stringify({userArray : [ userData ] }) );
+      } else {
+        //de lo contrario buscarlo buscar en el registro
+        
+        if (userValidation(userData)){
+          // en caso de datos validos o registro nuevo, logearlo
+          logInDone(userData);
+        } else {
+          //Datos invalidos: usuario existe pero el password es incorrecto
+          //TODO: cambiar password
+          alert("Datos inválidos");
+        }
+
+      }  
+    } else {
+      //Accion en caso de datos vacios
+    }
   })
 }
+
+var userValidation = function(userData){
+  let userArray = JSON.parse(localStorage.getItem("userRegister")).userArray ;
+  //Indice del usuario en el registro, en caso de que no este devuelve -1
+  let index = userArray.findIndex(element => element.username === userData.username);
+  if (index == -1){ 
+    //en caso de que no encuentre el usuario agregarlo
+    userArray.push(userData);
+    localStorage.setItem("userRegister", JSON.stringify({"userArray" : userArray}));
+    return true ; //los nuevos datos son validos
+  } else {
+    //los datos son validos si el password es correcto
+    console.log(userData);
+    return userData.password == userArray[index].password ;
+  }
+}
+
 
 logInRedirect();
 

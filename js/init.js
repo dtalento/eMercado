@@ -40,6 +40,25 @@ var getJSONData = function(url){
     });
 }
 
+var userNavbar = function(){
+  //agregamos al div dentro del navbar (que lo obtenemos como el elemento nav
+  // con class site-header) 
+  if ( (sessionStorage.getItem("currentUser") !== null) &&
+   (document.querySelector("nav.site-header").lastElementChild !== null) ) {
+    let username = sessionStorage.getItem("currentUser");
+    let userNavElement = document.createElement("div");
+    userNavElement.className = "py-2 d-none d-md-inline-block" ;
+
+    let profileLink = document.createElement("a");
+    profileLink.href = "my-profile.html" ;
+    profileLink.innerHTML = username;
+    userNavElement.appendChild(profileLink);
+
+    document.querySelector("nav.site-header").lastElementChild.appendChild(userNavElement);
+    
+  }
+}
+
 var checkLogIn = function(){
   let isLoggedIn = sessionStorage.getItem("loginFlag");//loginFlag = true si se esta loggeado 
   let isPageLogin = window.location.href.endsWith("login.html") // true si estas en login 
@@ -62,4 +81,5 @@ checkLogIn();
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e){
+  userNavbar(); //agrego un elemento al navbar con el nombre de usuario (TODO agregar cerrar sesion)
 });
