@@ -46,7 +46,15 @@ var logInValidation = function(){
         } else {
           //Datos invalidos: usuario existe pero el password es incorrecto
           //TODO: cambiar password
-          alert("Datos inválidos");
+          if (document.getElementById("passalert") == null){ 
+            //crear la alerta solo la primera vez
+            passAlert = document.createElement("p");
+            passAlert.id = "passalert" ;
+            passAlert.className = "alert alert-danger" ;
+            passAlert.innerHTML = "Datos inválidos" ;
+            loginForm.appendChild(passAlert);
+          }
+          
         }
 
       }  
