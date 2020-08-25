@@ -54,9 +54,26 @@ var userNavbar = function(){
     profileLink.innerHTML = username;
     userNavElement.appendChild(profileLink);
 
+    //Agregar un link para cerrar sesion
+    let logOutLink = document.createElement("a");
+    logOutLink.href = "#";
+    //llama a la función logOut sin seguir el href
+    logOutLink.setAttribute("onclick","logOut(); return false;"); 
+    logOutLink.style = "margin : 1em;"
+    logOutLink.innerHTML = "<small class='text-info'>Cerrar Sesión</small>";
+    userNavElement.appendChild(logOutLink);
+
     document.querySelector("nav.site-header").lastElementChild.appendChild(userNavElement);
     
   }
+}
+
+var logOut = function(){
+  event.preventDefault();
+  //elimina las flags de login y lo redirecciona al login
+  sessionStorage.removeItem("currentUser");
+  sessionStorage.setItem("loginFlag","false");
+  window.location.href="login.html"
 }
 
 var checkLogIn = function(){
