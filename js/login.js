@@ -2,7 +2,7 @@ var logInDone = function(userData){
   //guardar el nombre de usuario actual y setear la login flag
   sessionStorage.setItem("currentUser", userData.username);
   sessionStorage.setItem("loginFlag", "true"); 
-  
+
   //Luego del log in volver a la página pedida antes de la redirección
   // si esta no era la actual, sino volver al index
   if (sessionStorage.getItem("preLogInPage") == window.location.href) 
@@ -67,7 +67,6 @@ var userValidation = function(userData){
     return true ; //los nuevos datos son validos
   } else {
     //los datos son validos si el password es correcto
-    console.log(userData);
     return userData.password == userArray[index].password ;
   }
 }
