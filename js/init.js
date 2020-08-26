@@ -98,5 +98,5 @@ checkLogIn();
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e){
-  userNavbar(); //agrego un elemento al navbar con el nombre de usuario (TODO agregar cerrar sesion)
+  userNavbar(); //agrego un elemento al navbar con el nombre de usuario
 });
