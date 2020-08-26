@@ -3,22 +3,15 @@ var logInDone = function(userData){
   sessionStorage.setItem("currentUser", userData.username);
   sessionStorage.setItem("loginFlag", "true"); 
 
-  //Luego del log in volver a la página pedida antes de la redirección
-  // si esta no era la actual, sino volver al index
-  if (sessionStorage.getItem("preLogInPage") == window.location.href) 
-  {
-    window.location.href = "index.html" ;
-  } else {
+  if ( (sessionStorage.getItem("preLogInPage") !== null) &&
+      (sessionStorage.getItem("preLogInPage") !== window.location.href)){
     window.location.href = sessionStorage.getItem("preLogInPage");  
+    //Luego del log in volver a la página pedida antes de la redirección
+    // si esta existe  y no era la actual
+  } else {
+    //redireccionar al index como fallback
+    window.location.href = "index.html" ;
   }
-}
-
-var logInRedirect = function(){
-  //Si volvemos al login luego de estar loggeados ir al index
-  if (window.location.href.endsWith("login.html") &&
-      sessionStorage.getItem("loginFlag") == "true"){
-      window.location.href = "index.html" ;
-    }
 }
 
 var logInValidation = function(){
@@ -78,9 +71,6 @@ var userValidation = function(userData){
     return userData.password == userArray[index].password ;
   }
 }
-
-
-logInRedirect();
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los

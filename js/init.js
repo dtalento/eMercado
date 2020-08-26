@@ -77,18 +77,23 @@ var logOut = function(){
 }
 
 var checkLogIn = function(){
-  let isLoggedIn = sessionStorage.getItem("loginFlag");//loginFlag = true si se esta loggeado 
-  let isPageLogin = window.location.href.endsWith("login.html") // true si estas en login 
-
+  let isLoggedIn = JSON.parse(sessionStorage.getItem("loginFlag"));
+  let isPageLogin = window.location.href.endsWith("login.html");
+  
   // checkeo si ya existe la flag sino la declaro
-  if (isLoggedIn == undefined){ isLoggedIn = "false"; }
-
+  if (isLoggedIn === null){ isLoggedIn = false; }
+  
   //Si el usuario no inicio sesión  y no se encuentra en el login
   //guardar ruta de la página y redirigir al login
-  if ( (isLoggedIn !== "true") && (!isPageLogin) ){
+  if (!isLoggedIn && !isPageLogin){
     sessionStorage.setItem("preLogInPage", window.location.href);
     window.location.href = "login.html";
   }
+  
+  //Si esta en el login luego de estar logeado dirigir al index
+  if (isLoggedIn && isPageLogin){
+      window.location.href = "index.html" ;
+    }
 }
 
 //checkeo que este loggeado antes de cargar la página requerida
