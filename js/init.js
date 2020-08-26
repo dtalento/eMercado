@@ -44,7 +44,7 @@ var userNavbar = function(){
   //agregamos al div dentro del navbar (que lo obtenemos como el elemento nav
   // con class site-header) 
   if ( (sessionStorage.getItem("currentUser") !== null) &&
-   (document.querySelector("nav.site-header").lastElementChild !== null) ) {
+   (document.querySelector("nav.site-header") !== null) ) {
     let username = sessionStorage.getItem("currentUser");
     let userNavElement = document.createElement("div");
     userNavElement.className = "py-2 d-none d-md-inline-block" ;
