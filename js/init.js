@@ -58,7 +58,7 @@ var userNavbar = function(){
     let logOutLink = document.createElement("a");
     logOutLink.href = "#";
     //llama a la función logOut sin seguir el href
-    logOutLink.setAttribute("onclick","logOut(); return false;"); 
+    logOutLink.setAttribute("onclick","logOut(event);"); 
     logOutLink.style = "margin : 1em;"
     logOutLink.innerHTML = "<small class='text-info'>Cerrar Sesión</small>";
     userNavElement.appendChild(logOutLink);
@@ -68,12 +68,12 @@ var userNavbar = function(){
   }
 }
 
-var logOut = function(){
+var logOut = function(event){
   event.preventDefault();
   //elimina las flags de login y lo redirecciona al login
   sessionStorage.removeItem("currentUser");
   sessionStorage.setItem("loginFlag","false");
-  window.location.href="login.html"
+  window.location.href="login.html" ;
 }
 
 var checkLogIn = function(){
