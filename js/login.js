@@ -28,8 +28,9 @@ var logInValidation = function(){
       }
 
       if (localStorage.getItem("userRegister") === null){
-        //en caso de que no haya un registro crearlo
+        //en caso de que no haya un registro crearlo y logearlo
         localStorage.setItem( "userRegister", JSON.stringify({userArray : [ userData ] }) );
+        logInDone(userData);
       } else {
         //de lo contrario buscarlo buscar en el registro
         
