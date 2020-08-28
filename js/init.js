@@ -72,16 +72,27 @@ var logOut = function(event){
   event.preventDefault();
   //elimina las flags de login y lo redirecciona al login
   sessionStorage.removeItem("currentUser");
+  localStorage.removeItem("rememberUser");
+  
+  localStorage.setItem("rememberFlag","false")
   sessionStorage.setItem("loginFlag","false");
+  
   window.location.href="login.html" ;
 }
 
 var checkLogIn = function(){
   let isLoggedIn = JSON.parse(sessionStorage.getItem("loginFlag"));
+  let rememberFlag = JSON.parse(localStorage.getItem("rememberFlag"));
   let isPageLogin = window.location.href.endsWith("login.html");
-  
-  // checkeo si ya existe la flag sino la declaro
-  if (isLoggedIn === null){ isLoggedIn = false; }
+ 
+  // checkeo si ya existe las flags sino la declaro
+  if (rememberFlag === null){ rememberFlag = false;};
+  //si rememberFlag = true, entonces logear al usuario
+  if (rememberFlag){ 
+    sessionStorage.setItem("currentUser", localStorage.getItem("rememberUser"));
+    sessionStorage.setItem("loginFlag", "true"); 
+    isLoggedIn = true; 
+  } else if (isLoggedIn === null){ isLoggedIn = false; };
   
   //Si el usuario no inicio sesión  y no se encuentra en el login
   //guardar ruta de la página y redirigir al login

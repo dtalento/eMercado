@@ -1,8 +1,15 @@
 var logInDone = function(userData){
   //guardar el nombre de usuario actual y setear la login flag
-  sessionStorage.setItem("currentUser", userData.username);
-  sessionStorage.setItem("loginFlag", "true"); 
-
+  if (document.getElementById("remember").checked){
+    //en caso que chequeado remember logearlo hasta que cierre sesion
+    localStorage.setItem("rememberUser", userData.username);
+    localStorage.setItem("rememberFlag", "true")
+  } else {
+    //en caso contrario logearlo por una sesion
+    sessionStorage.setItem("currentUser", userData.username);
+    sessionStorage.setItem("loginFlag", "true"); 
+  }
+    
   if ( (sessionStorage.getItem("preLogInPage") !== null) &&
       (sessionStorage.getItem("preLogInPage") !== window.location.href)){
     window.location.href = sessionStorage.getItem("preLogInPage");  
