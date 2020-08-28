@@ -39,9 +39,17 @@ function productFilter(productArray){
     let filterMax = document.getElementById("rangeFilterCountMax").value;
     
     if ( (filterMax !== "") && (filterMin !== "") ){
+        //si se define ambos inputs filtrar en el rango
         return productArray.filter(arrayElement => 
             (arrayElement.cost >= filterMin) && (arrayElement.cost <= filterMax) );
-    } else {
+    } else if (filterMax == ""){
+        //si se define solo el minimo filtrar los menores al minimo
+        return productArray.filter(arrayElement => arrayElement.cost >= filterMin);
+    } else if (filterMin == ""){
+        //si se define solo el maximo filtrar los mayores al maximo
+        return productArray.filter(arrayElement => arrayElement.cost <= filterMax);
+    } else{
+        //si no se define ninguno no filtrar
         return productArray;
     }
 }
