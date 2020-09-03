@@ -12,7 +12,7 @@ function showProductList(){
         let product = sortFiltArray[i];
 
         htmlContentToAppend += `
-        <div class="list-group-item list-group-item-action">
+        <a href="product-info.html?productid=` + product.name + `" class="list-group-item list-group-item-action">
             <div class="row">
                 <div class="col-3">
                     <img src="` + product.imgSrc + `" alt="` + product.description + `" class="img-thumbnail">
@@ -28,7 +28,7 @@ function showProductList(){
                     </div>
                 </div>
             </div>
-        </div>
+        </a>
         `
     }
     document.getElementById("product-list").innerHTML = htmlContentToAppend;

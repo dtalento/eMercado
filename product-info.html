@@ -25,14 +25,48 @@
       <a class="py-2 d-none d-md-inline-block" href="cart.html">Mi carrito</a>
     </div>
   </nav>
-  <div class="container p-5">
-    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-      <h4 class="alert-heading">¡A trabajar! :)</h4>
-      <p>Esta sección corresponde a: Entrega 3 (Fecha de entrega: 13/09/2020) y Entrega 4 (Fecha de entrega: 20/09/2020).</p>
+  <main>
+    <div class="container text-center" style="margin-top: 5%;">
+      <section class="row">
+        <!--Carousel de las imagenes-->
+        <div id="imgCarousel" class="carousel slide col" data-ride="carousel">
+          <div id="product-img" class="carousel-inner"></div>
+      
+          <!-- Controles del carousel-->
+          <a class="carousel-control-prev" href="#imgCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Anterior</span>
+          </a>
+          <a class="carousel-control-next" href="#imgCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Siguiente</span>
+          </a>
+        </div>
+        
+        <div class="col">
+          <h1 id="product-name"></h1>
+        <dl class="text-justify"> 
+          <dd><p id="product-desc"></p></dd>
+          <dd><span id="product-cost" class="price-tag lead"></span></dd>
+          <dt>Vendidos</dt>
+          <dd><span id="product-sold" class="soldCount"></span></dd>
+          <dt>Categoría</dt>
+          <dd><span id="product-cat"></span></dd>
+        </dl>
+        </div>
+      </section>
       <hr>
-      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
+      <section>
+        <h2>También podría interesarte</h2>
+        <div id="product-related" class="row"></div>
+      </section>
+      <hr>
+      <section class="text-left">
+        <h2>Comentarios</h2>
+        <div id="comments-container"></div>
+      </section>
     </div>
-  </div>
+  </main>  
   <footer class="text-muted">
     <div class="container">
       <p class="float-right">
