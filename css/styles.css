@@ -144,3 +144,11 @@ a.custom-card:hover {
   font-family: Arial, Helvetica, sans-serif;
   color: #B12704;
 }
+
+.comment-user{
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.comment-date{
+  font-size: smaller;
+}

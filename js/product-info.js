@@ -34,6 +34,7 @@ function showProductInfo(){
 
             //muestro la informacion de productos relacionados
             showRelatedProducts(productInfo.relatedProducts);
+            showComments(productId);
         }
     });
     
@@ -63,6 +64,38 @@ function showRelatedProducts(relProductIds){
     });
 }
 
+function showComments(productId){
+    //peticiono los comentarios correspondientes al productId
+    //y los muestro con fecha según el locale
+    getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function(result){
+        if(result.status === "ok"){
+            let productComments = result.data;
+            const dateFormat = { year: 'numeric', month: 'long', day: 'numeric' };
+
+            let commentsDiv = document.getElementById("comments-container");
+            productComments.forEach(comment => {
+                commentsDiv.innerHTML += `
+                <div class="list-group-item">
+                    <div>
+                        <span class="comment-user">` + comment.user + `</span><br>
+                        ` + starRating(comment.score) + `<br>
+                        <time class="comment-date text-muted" datetime="` + comment.dateTime + `">Calificado el `
+                         + new Date(comment.dateTime).toLocaleString(undefined, dateFormat) + `</time>
+                    </div>
+                    <br>
+                    <p class="comment-body">` + comment.description + `</p>
+                </div>` ;
+            });
+        }
+    });
+}
+
+function starRating(score){
+    //devuelve un string para mostrar la calificación en estrellas
+    star = '<span class="fa fa-star checked"></span>';
+    noStar = '<span class="fa fa-star"></span>';
+    return star.repeat(score) + noStar.repeat(5 - score);
+}
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
