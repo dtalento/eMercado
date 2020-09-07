@@ -7,7 +7,19 @@ function showProductInfo(){
     getJSONData(PRODUCT_INFO_URL).then(function(result){
         if(result.status === "ok"){
             let productInfo = result.data;
-            //muestro la info del producto
+
+            //muestro la id producto que fue pedido en una nota antes del nombre
+            //en el caso de que el id exista
+            if(productId){
+                warningNote = document.createElement("p");
+                warningNote.className = "small alert-warning py-3";
+                warningNote.innerHTML = `<strong>Nota:</strong> has seleccionado <strong>`
+                 + productId + `</strong>, por simplicidad siempre se visualizará la información de 
+                 <strong>Chevrolet Onix Joy</strong>.`;
+                document.getElementById("product-name").before(warningNote);
+            };
+            
+             //muestro la info del producto
             document.getElementById("product-name").innerHTML = productInfo.name ;
             document.getElementById("product-desc").innerHTML = productInfo.description ;
             document.getElementById("product-cost").innerHTML = productInfo.currency + " " +  productInfo.cost ;
