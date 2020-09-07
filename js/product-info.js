@@ -15,15 +15,6 @@ function showProductInfo(){
             document.getElementById("product-cat").innerHTML = productInfo.category ;
 
             //muestro las imagenes en un carousel
-
-            /*
-            <div class="item active">
-                <img src="la.jpg" style="width:100%;">
-            </div>
-            <div class="item">
-                <img src="chicago.jpg" style="width:100%;">
-            </div>
-            */ 
             let imgDiv = document.getElementById("product-img");
             productInfo.images.forEach(imgSrc => {
                 imgDiv.innerHTML += "<img src='" + imgSrc + 
