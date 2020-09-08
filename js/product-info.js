@@ -1,3 +1,5 @@
+var commentsArray = [];
+
 function showProductInfo(){
     //obtengo el id del producto de la peticion
     const productId = new URLSearchParams(window.location.search).get("productid");
@@ -37,7 +39,7 @@ function showProductInfo(){
 
             //muestro la informacion de productos relacionados
             showRelatedProducts(productInfo.relatedProducts);
-            showComments(productId);
+            getAndShowComments(productId);
         }
     });
     
@@ -67,29 +69,36 @@ function showRelatedProducts(relProductIds){
     });
 }
 
-function showComments(productId){
-    //peticiono los comentarios correspondientes al productId
-    //y los muestro con fecha según el locale
+function getAndShowComments(productId){
+    //peticiona los comentarios correspondientes al productId
+    //los guarda en una variable global y los muestra
     getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function(result){
         if(result.status === "ok"){
-            let productComments = result.data;
-            const dateFormat = { year: 'numeric', month: 'long', day: 'numeric' };
-
-            let commentsDiv = document.getElementById("comments-container");
-            productComments.forEach(comment => {
-                commentsDiv.innerHTML += `
-                <div class="list-group-item">
-                    <div>
-                        <span class="comment-user">` + comment.user + `</span><br>
-                        ` + starRating(comment.score) + `<br>
-                        <time class="comment-date text-muted" datetime="` + comment.dateTime + `">Calificado el `
-                         + new Date(comment.dateTime).toLocaleString(undefined, dateFormat) + `</time>
-                    </div>
-                    <br>
-                    <p class="comment-body">` + comment.description + `</p>
-                </div>` ;
-            });
+            commentsArray = result.data;
+            showComments();
         }
+    });
+}
+
+function showComments(){
+    //muestra los comentarios con su fecha en locale y formato según dateFormat
+    const dateFormat = { year: 'numeric', month: 'long', day: 'numeric' };
+    let commentsDiv = document.getElementById("comments-container");
+
+    commentsArray.forEach(comment => {
+        commentsDiv.innerHTML += `
+        <div class="list-group-item">
+            <div>
+                <span class="comment-user">` + comment.user + `</span><br>` 
+                + starRating(comment.score) + `<br>
+                <time class="comment-date text-muted" datetime="` 
+                    + comment.dateTime + `">Calificado el ` 
+                    + new Date(comment.dateTime).toLocaleString(undefined, dateFormat) 
+                    + `</time>
+            </div>
+            <br>
+            <p class="comment-body">` + comment.description + `</p>
+        </div>` ;
     });
 }
 
