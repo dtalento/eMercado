@@ -142,6 +142,15 @@ function showScoreStars(){
          stars[i].className = "fa fa-star new-score";
 }
 
+function resetCommentForm(){
+    //vuelve los campos de la forma a su valor default
+    // y muestra el nuevo score
+    let form = document.getElementById("new-comment-form");
+    form["score"].value = 3;
+    form["comment"].value = "";
+    showScoreStars();
+}
+
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
