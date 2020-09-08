@@ -30,10 +30,12 @@ function showProductInfo(){
 
             //muestro las imagenes en un carousel
             let imgDiv = document.getElementById("product-img");
+            let htmlContentToAppend = "";
             productInfo.images.forEach(imgSrc => {
-                imgDiv.innerHTML += "<img src='" + imgSrc + 
+                htmlContentToAppend += "<img src='" + imgSrc + 
                 "' class='carousel-item w-100 img-fluid img-thumbnail'></img>" ;
             });
+            imgDiv.innerHTML = htmlContentToAppend;
             //la primera imagen tiene que tener la class active
             imgDiv.firstChild.className += " active";
 
@@ -55,9 +57,9 @@ function showRelatedProducts(relProductIds){
             let relatedProducts = result.data.filter( (prod, index) => relProductIds.includes(index) );
             
             //los agrego al html
-            let relProdDiv = document.getElementById("product-related");
+            let htmlContentToAppend = "";
             relatedProducts.forEach(product => {
-                relProdDiv.innerHTML += `
+                htmlContentToAppend += `
                 <a href="product-info.html?productid=` + product.name + `" class=" col-md-4 list-group-item list-group-item-action">
                     <img src="` + product.imgSrc + `" alt="` + product.description + `" class ="img-fluid img-thumbnail"/>
                     <h4>` + product.name + `</h4> 
@@ -65,6 +67,7 @@ function showRelatedProducts(relProductIds){
                 </a>
                 `;
             });
+            document.getElementById("product-related").innerHTML = htmlContentToAppend;
         }
     });
 }
@@ -83,10 +86,10 @@ function getAndShowComments(productId){
 function showComments(){
     //muestra los comentarios con su fecha en locale y formato según dateFormat
     const dateFormat = { year: 'numeric', month: 'long', day: 'numeric' };
-    let commentsDiv = document.getElementById("comments-container");
-
+    
+    let htmlContentToAppend = "";
     commentsArray.forEach(comment => {
-        commentsDiv.innerHTML += `
+        htmlContentToAppend += `
         <div class="list-group-item">
             <div>
                 <span class="comment-user">` + comment.user + `</span><br>` 
@@ -100,6 +103,7 @@ function showComments(){
             <p class="comment-body">` + comment.description + `</p>
         </div>` ;
     });
+    document.getElementById("comments-container").innerHTML = htmlContentToAppend;
 }
 
 function starRating(score){
