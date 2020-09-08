@@ -95,9 +95,38 @@ function showComments(productId){
 
 function starRating(score){
     //devuelve un string para mostrar la calificación en estrellas
-    star = '<span class="fa fa-star checked"></span>';
-    noStar = '<span class="fa fa-star"></span>';
+    let star = '<span class="fa fa-star checked"></span>';
+    let noStar = '<span class="fa fa-star"></span>';
     return star.repeat(score) + noStar.repeat(5 - score);
+}
+
+function newCommentHandler(){
+    //arma un nuevo comentario a partir de la forma al hacer submit
+    //con //el formato de los datos de la database 
+    let form = document.getElementById("new-comment-form");
+    form.addEventListener("submit", function(e){
+        e.preventDefault();
+
+        let date = new Date().toISOString();
+        let newComment = {
+            'score' : form['score'].value,
+            'description' : form['comment'].value, 
+            'user' : sessionStorage.getItem("currentUser"),
+            'dateTime' : date.slice(0,10) + " " + date.slice(11,19),
+        };
+    });
+}
+
+function showScoreStars(){
+    //muestra la cantidad de estrellas encendidas dependiendo del score
+    let score = document.getElementById("new-comment-form")['score'].value;
+    let stars = document.getElementById("new-comment-stars")
+    .getElementsByTagName('span');
+    for(let i = 0; i < score; i++)
+        stars[i].className = "fa fa-star new-score checked";;
+
+    for(let i = score; i < 5; i++)
+         stars[i].className = "fa fa-star new-score";
 }
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
@@ -105,4 +134,11 @@ function starRating(score){
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e){
     showProductInfo();
+    newCommentHandler();
+
+    //muestra las estrellas cuando cargamos la página
+    //y cuando cambiamos el score
+    showScoreStars(); 
+    document.getElementById("new-comment-stars") 
+    .addEventListener("click", () => {showScoreStars();});
 });

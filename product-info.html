@@ -65,6 +65,23 @@
         <h2>Comentarios</h2>
         <div id="comments-container"></div>
       </section>
+      <section>
+        <hr>
+        <h2>Deja tu calificación</h2>
+        <form id="new-comment-form" action="index.html" method="POST">
+          <fieldset id="new-comment-stars" class="text-left">
+              <label><input type="radio" name="score" value="1"><span></span></label>
+              <label><input type="radio" name="score" value="2"><span></span></label>
+              <label><input type="radio" name="score" value="3" checked><span></span></label>
+              <label><input type="radio" name="score" value="4"><span></span></label>
+              <label><input type="radio" name="score" value="5"><span></span></label>
+          </fieldset>
+          <fieldset>
+              <textarea name="comment" class="w-100" placeholder="Tu comentario aquí" required></textarea>
+          </fieldset>
+          <input type="submit" value="Calificar" class="btn btn-primary btn-block">
+        </form>
+      </section>
     </div>
   </main>  
   <footer class="text-muted">

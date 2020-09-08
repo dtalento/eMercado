@@ -152,3 +152,18 @@ a.custom-card:hover {
 .comment-date{
   font-size: smaller;
 }
+
+/*star rating in new comment*/
+.new-score{
+  font-size: larger;
+}
+.new-score:hover{
+  color: rgb(255, 210, 86);
+}
+#new-comment-form #new-comment-stars input{
+  opacity: 0;
+  position: absolute;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
