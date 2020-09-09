@@ -22,7 +22,7 @@ function showProductInfo(){
             };
             
              //muestro la info del producto
-            document.getElementById("product-name").innerHTML = productInfo.name ;
+            document.getElementById("product-name").innerHTML = productId ;
             document.getElementById("product-desc").innerHTML = productInfo.description ;
             document.getElementById("product-cost").innerHTML = productInfo.currency + " " +  productInfo.cost ;
             document.getElementById("product-sold").innerHTML = productInfo.soldCount ;
