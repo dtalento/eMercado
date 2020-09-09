@@ -88,11 +88,18 @@ function showComments(){
     const dateFormat = { year: 'numeric', month: 'long', day: 'numeric' };
     
     let htmlContentToAppend = "";
-    commentsArray.forEach(comment => {
+    commentsArray.forEach( (comment, index) => {
         htmlContentToAppend += `
         <div class="list-group-item">
             <div>
-                <span class="comment-user">` + comment.user + `</span><br>` 
+                <div class="d-flex justify-content-between"> 
+                    <span class="comment-user">` + comment.user + `</span>`;
+        
+        if (comment.user == sessionStorage.getItem("currentUser"))
+        //en caso de ser un comentario del usuario, agrega un botón para eliminarlo
+            htmlContentToAppend += "<button class='btn btn-link' onclick='removeComment(" + index + ")'>Eliminar Comentario</button>";
+        
+        htmlContentToAppend +=`</div>` 
                 + starRating(comment.score) + `<br>
                 <time class="comment-date text-muted" datetime="` 
                     + comment.dateTime + `">Calificado el ` 
@@ -102,6 +109,8 @@ function showComments(){
             <br>
             <p class="comment-body">` + comment.description + `</p>
         </div>` ;
+
+        
     });
     document.getElementById("comments-container").innerHTML = htmlContentToAppend;
 }
@@ -127,6 +136,10 @@ function newCommentHandler(){
             'user' : sessionStorage.getItem("currentUser"),
             'dateTime' : date.slice(0,10) + " " + date.slice(11,19),
         };
+
+        commentsArray.push(newComment);
+        showComments();
+        resetCommentForm();
     });
 }
 
@@ -149,6 +162,11 @@ function resetCommentForm(){
     form["score"].value = 3;
     form["comment"].value = "";
     showScoreStars();
+}
+
+function removeComment(commentIndex){
+    commentsArray.splice(commentIndex,1);
+    showComments();
 }
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
