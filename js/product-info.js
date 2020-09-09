@@ -60,10 +60,12 @@ function showRelatedProducts(relProductIds){
             let htmlContentToAppend = "";
             relatedProducts.forEach(product => {
                 htmlContentToAppend += `
-                <a href="product-info.html?productid=` + product.name + `" class=" col-md-4 list-group-item list-group-item-action">
+                <a href="product-info.html?productid=` + product.name + `" class="prod-card col-md-3 list-group-item list-group-item-action">
                     <img src="` + product.imgSrc + `" alt="` + product.description + `" class ="img-fluid img-thumbnail"/>
-                    <h4>` + product.name + `</h4> 
-                    <span class="price-tag lead">` +  product.currency + ` ` + product.cost + `</span>
+                    <div>
+                        <span class="price-tag lead">` +  product.currency + ` ` + product.cost + `</span>
+                        <h4>` + product.name + `</h4> 
+                    </div>
                 </a>
                 `;
             });
@@ -97,7 +99,7 @@ function showComments(){
         
         if (comment.user == sessionStorage.getItem("currentUser"))
         //en caso de ser un comentario del usuario, agrega un botón para eliminarlo
-            htmlContentToAppend += "<button class='btn btn-link' onclick='removeComment(" + index + ")'>Eliminar Comentario</button>";
+            htmlContentToAppend += "<button class='btn btn-link btn-sm' onclick='deleteComment(" + index + ")'>Eliminar Comentario</button>";
         
         htmlContentToAppend +=`</div>` 
                 + starRating(comment.score) + `<br>
@@ -164,7 +166,7 @@ function resetCommentForm(){
     showScoreStars();
 }
 
-function removeComment(commentIndex){
+function deleteComment(commentIndex){
     commentsArray.splice(commentIndex,1);
     showComments();
 }

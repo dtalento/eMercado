@@ -153,6 +153,19 @@ a.custom-card:hover {
   font-size: smaller;
 }
 
+/* product card style*/
+.prod-card{
+  padding: 0;
+  text-align: left;
+}
+
+.prod-card div{
+  padding: 1em;
+}
+
+.prod-card h4{
+  font-size: larger;
+}
 /*star rating in new comment*/
 .new-score{
   font-size: larger;
