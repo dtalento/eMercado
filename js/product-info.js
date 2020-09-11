@@ -10,8 +10,15 @@ function showProductInfo(){
         if(result.status === "ok"){
             let productInfo = result.data;
 
+             //muestro la info del producto
+            document.getElementById("product-name").innerHTML = productInfo.name ;
+            document.getElementById("product-desc").innerHTML = productInfo.description ;
+            document.getElementById("product-cost").innerHTML = productInfo.currency + " " +  productInfo.cost ;
+            document.getElementById("product-sold").innerHTML = productInfo.soldCount ;
+            document.getElementById("product-cat").innerHTML = productInfo.category ;
+            
             //muestro la id producto que fue pedido en una nota antes del nombre
-            //en el caso de que el id exista
+            //en el caso de que el id exista y remplazo el título
             if(productId){
                 warningNote = document.createElement("p");
                 warningNote.className = "small alert-warning py-3";
@@ -19,14 +26,8 @@ function showProductInfo(){
                  + productId + `</strong>, por simplicidad siempre se visualizará la información de 
                  <strong>Chevrolet Onix Joy</strong>.`;
                 document.getElementById("product-name").before(warningNote);
+                document.getElementById("product-name").innerHTML = productId ;    
             };
-            
-             //muestro la info del producto
-            document.getElementById("product-name").innerHTML = productId ;
-            document.getElementById("product-desc").innerHTML = productInfo.description ;
-            document.getElementById("product-cost").innerHTML = productInfo.currency + " " +  productInfo.cost ;
-            document.getElementById("product-sold").innerHTML = productInfo.soldCount ;
-            document.getElementById("product-cat").innerHTML = productInfo.category ;
 
             //muestro las imagenes en un carousel
             let imgDiv = document.getElementById("product-img");
