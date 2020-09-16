@@ -180,3 +180,40 @@ a.custom-card:hover {
   height: 0;
   width: 0;
 }
+
+/*User Nav Dropdown*/
+.user-nav{
+  position: relative;
+  width: 11em;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-nav-content{
+  display: none;
+  overflow: visible;
+  position: absolute;
+  background-color: #ffffff;
+  width: 100%;
+  transform: translate(-10px, 10px);
+  box-shadow: 0px 8px 16px 4px rgba(0,0,0,0.4);
+  padding: 1em;
+  z-index: 1;
+  border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #212529;
+
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-nav-content a{
+  display: block;
+  color: #0087F7;
+}
+.user-nav:focus-within .user-nav-content{
+  display: block;
+}

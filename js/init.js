@@ -41,35 +41,28 @@ var getJSONData = function(url){
 }
 
 var userNavbar = function(){
-  //agregamos al div dentro del navbar (que lo obtenemos como el elemento nav
+  //agregamos al button dentro del navbar (que lo obtenemos como el elemento nav
   // con class site-header) 
   if ( (sessionStorage.getItem("currentUser") !== null) &&
    (document.querySelector("nav.site-header") !== null) ) {
     let username = sessionStorage.getItem("currentUser");
-    let userNavElement = document.createElement("div");
-    userNavElement.className = "py-2 d-none d-md-inline-block" ;
+    let userNavElement = document.createElement("button");
+    userNavElement.className = "btn btn-primary user-nav" ;
 
-    let profileLink = document.createElement("a");
-    profileLink.href = "my-profile.html" ;
-    profileLink.innerHTML = username;
-    userNavElement.appendChild(profileLink);
-
-    //Agregar un link para cerrar sesion
-    let logOutLink = document.createElement("a");
-    logOutLink.href = "#";
-    //llama a la función logOut sin seguir el href
-    logOutLink.setAttribute("onclick","logOut(event);"); 
-    logOutLink.style = "margin : 1em;"
-    logOutLink.innerHTML = "<small class='text-info'>Cerrar Sesión</small>";
-    userNavElement.appendChild(logOutLink);
+    userNavElement.innerHTML= `<span>` + username + `</span>
+    <div class="user-nav-content">
+      <a href="my-profile.html">Mi Perfil</a>
+      <a href="cart.html">Mi Carrito</a>
+      <hr>
+      <button class="btn btn-link btn-sm" onclick="logOut();">Cerrar Sesión</button>
+    </div>`;
 
     document.querySelector("nav.site-header").lastElementChild.appendChild(userNavElement);
     
   }
 }
 
-var logOut = function(event){
-  event.preventDefault();
+var logOut = function(){
   //elimina las flags de login y lo redirecciona al login
   sessionStorage.removeItem("currentUser");
   localStorage.removeItem("rememberUser");
