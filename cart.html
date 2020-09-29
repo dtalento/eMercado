@@ -42,14 +42,66 @@
       <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
     </div>
   </nav>
-  <div class="container p-5">
-    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-      <h4 class="alert-heading">¡A trabajar! :)</h4>
-      <p>Esta sección corresponde a: Entrega 5 (Fecha de entrega: 11/10/2020) y Entrega 6 (Fecha de entrega: 25/10/2020).</p>
-      <hr>
-      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
+  <main class="text-center p-4">
+    <h2>Mi carrito</h2>
+    <hr>
+    <div class="container row">
+        <div class="col-2"></div>
+        <div class="col-3"><h4>Artículo</h4></div>
+        <div class="col-2"><h4>Precio</h4></div>
+        <div class="col-2"><h4>Cantidad</h4></div>
+        <div class="col-3"><h4>Total del artículo</h4></div>
     </div>
-  </div>
+    <hr>
+    
+    <div id="articles"></div>
+    
+
+    <div class="container row">
+      <div class="col-7"></div>
+      <div class="col-2"><h4>Subtotal</h4></div>
+      <div class="col-3"><span class="price-tag" id="subtotal">UYU 1</span></div>
+    </div>
+
+    <div class="container row">
+      <div class="col-3"></div>
+      <div class="col-4">
+        <label>Tipo de envío: 
+            <select name="ship-type" id="ship-type">
+            <option value="standard">Standard</option>
+            <option value="express">Express</option>
+            <option value="premium">Premium</option>
+            </select>
+        </label>
+      </div>
+      <div class="col-2"><h4>Envío</h4></div>
+      <div class="col-3"><span class="price-tag" id="ship-cost">UYU 2</span></div>
+    </div>
+    <hr>
+    
+    <div class="container row">
+      <div class="col-7"></div>
+      <div class="col-2"><h2>Total</h2></div>
+      <div class="col-3">
+        <div> <span class="price-tag" id="total">UYU 3</span></div>
+      </div>
+    </div>
+
+    <div class="container row">
+      <div class="col-3"></div>
+      <div class="col-4">
+        <label>Forma de pago: 
+          <select name="payment" id="payment">
+          <option value="transfer">Transferencia bancaria</option>
+          <option value="credit">Tarjeta de crédito</option>
+          </select>
+        </label>
+      </div>
+      <div class="col-2"></div>
+      <div class="col-3"><button class="btn btn-success">Comprar</button></div>
+    </div>
+  
+  </main>
   <div id="spinner-wrapper">
     <div class="lds-ring">
       <div></div>
