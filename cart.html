@@ -12,6 +12,10 @@
   <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
 
+
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+  <link href="css/dropzone.css" rel="stylesheet">
   <style>
     .bd-placeholder-img {
       font-size: 1.125rem;
@@ -27,10 +31,26 @@
         font-size: 3.5rem;
       }
     }
+    .price-tag{
+      font-size: larger;
+    }
+    #total{
+      font-size: x-large;
+      font-weight: bold;
+    }
+
+    .articles-count{
+      display: inline;
+      width: 3em;
+      -moz-appearance: textfield;
+    }
+
+    .articles-count::-webkit-outer-spin-button,
+    .articles-count::-webkit-inner-spin-button{
+      -webkit-appearance: none;
+      margin: 0;
+    }
   </style>
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/styles.css" rel="stylesheet">
-  <link href="css/dropzone.css" rel="stylesheet">
 </head>
 
 <body>
@@ -66,18 +86,18 @@
     <div class="container row">
       <div class="col-3"></div>
       <div class="col-4">
-        <label>Tipo de envío: 
-            <select name="ship-type" id="ship-type">
+        <label>Tipo de envío 
+            <select name="ship-type" id="ship-type" class="custom-select custom-select-sm">
             <option value="standard">Standard</option>
             <option value="express">Express</option>
             <option value="premium">Premium</option>
             </select>
         </label>
       </div>
-      <div class="col-2"><h4>Envío</h4></div>
-      <div class="col-3"><span class="price-tag" id="ship-cost">UYU 2</span></div>
+      <div class="col-2"><br><h4>Envío</h4></div>
+      <div class="col-3"><br><span class="price-tag" id="ship-cost">UYU 2</span></div>
     </div>
-    <hr>
+    <br><br>
     
     <div class="container row">
       <div class="col-7"></div>
@@ -86,19 +106,23 @@
         <div> <span class="price-tag" id="total">UYU 3</span></div>
       </div>
     </div>
+    <br><br>
+    <div class="container row">
+      <div class="col-7"></div>
+      <div class="col-2">
+        <label for="payment">Forma de pago</label>
+      </div>
+      <div class="col-3">
+        <select name="payment" id="payment" class="custom-select custom-select-sm">
+        <option value="transfer">Transferencia bancaria</option>
+        <option value="credit">Tarjeta de crédito</option>
+        </select>
+      </div>
+    </div>
 
     <div class="container row">
-      <div class="col-3"></div>
-      <div class="col-4">
-        <label>Forma de pago: 
-          <select name="payment" id="payment">
-          <option value="transfer">Transferencia bancaria</option>
-          <option value="credit">Tarjeta de crédito</option>
-          </select>
-        </label>
-      </div>
-      <div class="col-2"></div>
-      <div class="col-3"><button class="btn btn-success">Comprar</button></div>
+      <div class="col-9"></div>
+      <div class="col-3"><button class="btn btn-block btn-success">Comprar</button></div>
     </div>
   
   </main>
