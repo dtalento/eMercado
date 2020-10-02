@@ -78,12 +78,9 @@ function updateCount(event, index){
     } else {
         newCount = parseInt(event.target.value);
         if ( count === 0 && newCount > 0){
-            console.log(count);
             countDiv.lastChild.remove(); //Quita el boton de eliminar articulo si aumento la cantidad de 0
         } else if( newCount === 0 && count > 0){
             //Pone el boton de eliminar articulo si la cantidad baja a 0
-            console.log(count);
-            console.log(newCount);
             removeButtonRender(index, countDiv);
         }
     }
