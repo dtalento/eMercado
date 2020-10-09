@@ -50,6 +50,29 @@
       -webkit-appearance: none;
       margin: 0;
     }
+   
+    #cart-header div{
+      font-size: x-large;
+      padding-bottom: 1em;
+    }
+    .article-container{
+      border: 0;
+      border-top: 1px;
+      border-style: solid;
+      border-radius: 1px;
+      border-color: lightgray;
+      padding: 1em 0;
+    }
+
+    .article-container:hover{
+      background-color: lightgray;
+    }
+
+    .article-container img{
+      max-height: 5em;
+      padding: 0;
+      border: 0;
+    }
   </style>
 </head>
 
@@ -64,50 +87,57 @@
   </nav>
   <main class="text-center p-4">
     <h2>Mi carrito</h2>
-    <hr>
-    <div class="container row">
+    <br><hr>
+    <div class="row" id="cart-header">
         <div class="col-2"></div>
-        <div class="col-3"><h4>Artículo</h4></div>
-        <div class="col-2"><h4>Precio</h4></div>
-        <div class="col-2"><h4>Cantidad</h4></div>
-        <div class="col-3"><h4>Total del artículo</h4></div>
+        <div class="col-3">Artículo</div>
+        <div class="col-2">Precio</div>
+        <div class="col-2">Cantidad</div>
+        <div class="col-3">Total del artículo</div>
     </div>
-    <hr>
     
     <div id="articles"></div>
     
-
-    <div class="container row">
-      <div class="col-7"></div>
+    <hr>
+    <div class="row">
+      <div class="col-3"></div>
+      <div class="col-4">
+        <label> Dirección del envío
+          <input type="text" class="form-control" name="address" placeholder="Calle, Número, Esquina">
+        </label>
+        <label> País
+          <input type="text" class="form-control" name="country">
+        </label>
+      </div>
       <div class="col-2"><h4>Subtotal</h4></div>
-      <div class="col-3"><span class="price-tag" id="subtotal">UYU 1</span></div>
+      <div class="col-3"><span class="price-tag" id="subtotal"></span></div>
     </div>
 
-    <div class="container row">
+    <div class="row">
       <div class="col-3"></div>
       <div class="col-4">
         <label>Tipo de envío 
             <select name="ship-type" id="ship-type" class="custom-select custom-select-sm">
-            <option value="standard">Standard</option>
-            <option value="express">Express</option>
-            <option value="premium">Premium</option>
+            <option value="standard" selected>Estándar (5%)</option>
+            <option value="express">Express (7%)</option>
+            <option value="premium">Premium (15%)</option>
             </select>
         </label>
       </div>
       <div class="col-2"><br><h4>Envío</h4></div>
-      <div class="col-3"><br><span class="price-tag" id="ship-cost">UYU 2</span></div>
+      <div class="col-3"><br><span class="price-tag" id="ship-cost">UYU ???</span></div>
     </div>
     <br><br>
     
-    <div class="container row">
+    <div class="row">
       <div class="col-7"></div>
       <div class="col-2"><h2>Total</h2></div>
       <div class="col-3">
-        <div> <span class="price-tag" id="total">UYU 3</span></div>
+        <div> <span class="price-tag" id="total">UYU ???</span></div>
       </div>
     </div>
     <br><br>
-    <div class="container row">
+    <div class="row">
       <div class="col-7"></div>
       <div class="col-2">
         <label for="payment">Forma de pago</label>
@@ -120,7 +150,7 @@
       </div>
     </div>
 
-    <div class="container row">
+    <div class="row">
       <div class="col-9"></div>
       <div class="col-3"><button class="btn btn-block btn-success">Comprar</button></div>
     </div>

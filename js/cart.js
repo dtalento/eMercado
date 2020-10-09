@@ -16,7 +16,7 @@ function showArticles(){
     let articlesDiv = document.getElementById("articles");
 
     if( articles.length == 0){
-        articlesDiv.innerHTML = "<p class='text-muted'>No tienes artículos en tu carrito</p><hr>";
+        articlesDiv.innerHTML = "<p class='text-muted'>No tienes artículos en tu carrito</p>";
     } else {
         let htmlContentToAppend = "";
         articles.forEach((article, index) => {
@@ -25,7 +25,7 @@ function showArticles(){
 
             //Al mostrar los precios utilizamos toLocaleString para formatearlo adecuadamente
             htmlContentToAppend += `
-            <div class="container row">
+            <div class="row article-container">
                 <div class="col-2">
                     <img class="img-thumbnail" src="` + article.src + `">
                 </div>
@@ -33,7 +33,7 @@ function showArticles(){
                     <span>` + article.name + `</span>
                 </div>
                 <div class="col-2">
-                    <div><span class="price-tag">` + article.currency + ` ` + article.unitCost.toLocaleString() + `</span></div>
+                    <span class="price-tag">` + article.currency + ` ` + article.unitCost.toLocaleString() + `</span>
                 </div>
                 <div class="col-2">
                     <input type="number" min="0" size="3" class="form-control articles-count" value="` + article.count + `" oninput="updateCount(event,` + index + `);">
@@ -41,10 +41,9 @@ function showArticles(){
                     <button class="btn btn-sm btn-primary" onclick="addCount(event, ` + index + `);">+</button><br>
                 </div>
                 <div class="col-3">
-                    <div><span class="price-tag art-total"> UYU ` + articleTotal.toLocaleString() + `</span></div>
+                    <span class="price-tag art-total"> UYU ???</span>
                 </div>
-            </div>
-            <hr>`;
+            </div>`;
         });
 
         articlesDiv.innerHTML = htmlContentToAppend;
@@ -55,6 +54,8 @@ function showArticles(){
                 removeButtonRender(index, document.getElementsByClassName("articles-count")[index].parentElement);
             }
         })
+
+        updateTotals();
     }
 
 }
@@ -85,6 +86,7 @@ function updateCount(event, index){
         }
     }
     articles[index].count = newCount; //Finalmente actualizo el count del array
+    updateTotals();
 }
 
 function reduceCount(event, index){
@@ -100,6 +102,8 @@ function reduceCount(event, index){
             //Pone el boton de eliminar articulo si la cantidad baja a 0
             removeButtonRender(index, countDiv);
         }
+    
+        updateTotals();
     }
 }
 
@@ -114,6 +118,7 @@ function addCount(event, index){
 
     articles[index].count +=1 ;
     countDiv.querySelector(".articles-count").value = articles[index].count;
+    updateTotals();
 }
 
 function removeArticle(index){
@@ -122,7 +127,7 @@ function removeArticle(index){
     let articlesDiv = document.getElementById("articles");
     let removedMsg = document.createElement("p");
     removedMsg.innerHTML = `<button class="btn btn-sm btn-link" onclick="dismissRemoved(event);">x</button>
-     Se quito <span style="color : blue;">` + articles[index].name + `</span> de tu carrito <hr>`;
+     Se quito <span style="color : blue;">` + articles[index].name + `</span> de tu carrito`;
 
     articlesDiv.before(removedMsg); //Muetra el mensaje arriba del div de articles 
     articles.splice(index, 1);
@@ -133,6 +138,19 @@ function removeArticle(index){
 function dismissRemoved(event){
     //Elimina el contenedor del mensaje
     event.target.parentElement.remove();
+}
+
+function updateTotals(){
+    articleTotalSpan = document.getElementsByClassName("art-total");
+
+    let subtotal = 0;
+    articles.forEach((article, index) => {
+        articleTotal = (article.currency == "USD" ? 40 : 1)*article.unitCost*article.count; 
+        articleTotalSpan[index].innerHTML = "UYU " + articleTotal.toLocaleString();
+
+        subtotal += articleTotal;
+    })
+    document.getElementById("subtotal").innerHTML = "UYU " + subtotal.toLocaleString();
 }
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
