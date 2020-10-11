@@ -20,8 +20,6 @@ function showArticles(){
     } else {
         let htmlContentToAppend = "";
         articles.forEach((article, index) => {
-            //El precio de los artículos en dolares cambiarlos a pesos en el total del articulo
-            articleTotal = (article.currency == "USD" ? 40 : 1)*article.unitCost*article.count; 
 
             //Al mostrar los precios utilizamos toLocaleString para formatearlo adecuadamente
             htmlContentToAppend += `
@@ -141,10 +139,12 @@ function dismissRemoved(event){
 }
 
 function updateTotals(){
+    //Actualiza el Subtotal y Total
     articleTotalSpan = document.getElementsByClassName("art-total");
 
     let subtotal = 0;
     articles.forEach((article, index) => {
+        //El precio del artículo en dolares cambiarlo a pesos
         articleTotal = (article.currency == "USD" ? 40 : 1)*article.unitCost*article.count; 
         articleTotalSpan[index].innerHTML = "UYU " + articleTotal.toLocaleString();
 
