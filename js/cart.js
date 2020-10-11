@@ -34,9 +34,9 @@ function showArticles(){
                     <span class="price-tag">` + article.currency + ` ` + article.unitCost.toLocaleString() + `</span>
                 </div>
                 <div class="col-2">
-                    <input type="number" min="0" size="3" class="form-control articles-count" value="` + article.count + `" oninput="updateCount(event,` + index + `);">
-                    <button class="btn btn-sm btn-primary" onclick="reduceCount(event, ` + index + `);">-</button>
-                    <button class="btn btn-sm btn-primary" onclick="addCount(event, ` + index + `);">+</button><br>
+                    <input type="number" min="0" size="3" class="form-control articles-count" value="` + article.count + `" oninput="updateCount(` + index + `);">
+                    <button class="btn btn-sm btn-primary" onclick="reduceCount(` + index + `);">-</button>
+                    <button class="btn btn-sm btn-primary" onclick="addCount(` + index + `);">+</button><br>
                 </div>
                 <div class="col-3">
                     <span class="price-tag art-total"> UYU ???</span>
@@ -49,7 +49,7 @@ function showArticles(){
         articles.forEach((article, index) => {
             //Si el count del articulo es 0 mostrar el boton de quitar articulo
             if(article.count == 0){
-                removeButtonRender(index, document.getElementsByClassName("articles-count")[index].parentElement);
+                removeButtonRender(index);
             }
         })
 
@@ -58,65 +58,50 @@ function showArticles(){
 
 }
 
-function removeButtonRender(index, countDiv){
+function removeButtonRender(index){
     let removeButton = document.createElement("button")
     removeButton.innerHTML = "Quitar artículo";
     removeButton.className = "btn btn-sm btn-link";
     removeButton.addEventListener("click", () => removeArticle(index));
-    countDiv.appendChild(removeButton);
+    document.getElementsByClassName("articles-count")[index].parentElement.appendChild(removeButton);
 }
 
-function updateCount(event, index){
+function updateCount(index){
     //Modifica la ctdad del articulo cuando se entra en su input
-    let countDiv = event.target.parentElement;
+    let countInput = document.getElementsByClassName("articles-count")[index];
+    let countDiv = countInput.parentElement;
     let count = articles[index].count;
-    let newCount;
+    let newCount = parseInt(countInput.value);
 
-    if(event.target.value === '' || event.target.value < 0){
+    if( isNaN(newCount) || newCount.value < 0){
         newCount = count; //En el caso de input invalido mantener el viejo count
     } else {
-        newCount = parseInt(event.target.value);
         if ( count === 0 && newCount > 0){
             countDiv.lastChild.remove(); //Quita el boton de eliminar articulo si aumento la cantidad de 0
         } else if( newCount === 0 && count > 0){
             //Pone el boton de eliminar articulo si la cantidad baja a 0
-            removeButtonRender(index, countDiv);
+            removeButtonRender(index);
         }
     }
     articles[index].count = newCount; //Finalmente actualizo el count del array
     updateTotals();
 }
 
-function reduceCount(event, index){
+function reduceCount(index){
     //Reduce en 1 la cantidad del articulo numero index
-    //Si es 0 mostrar la opcion de eliminar el articulo
-    let countDiv = event.target.parentElement;
-    
-    if(articles[index].count > 0){
-        articles[index].count -=1 ;
-        countDiv.querySelector(".articles-count").value = articles[index].count;
-     
-        if(articles[index].count == 0){
-            //Pone el boton de eliminar articulo si la cantidad baja a 0
-            removeButtonRender(index, countDiv);
-        }
-    
-        updateTotals();
+    // y actualiza el count
+    let count = articles[index].count;
+    if(count > 0){
+        document.getElementsByClassName("articles-count")[index].value = count - 1;
+        updateCount(index);
     }
 }
 
-function addCount(event, index){
+function addCount(index){
     //Aumenta en 1 la cantidad del articulo numero index
-    //Si era 0 quita la opcion de eliminar el articulo
-    let countDiv = event.target.parentElement;
-    
-    if(articles[index].count == 0){
-        countDiv.lastChild.remove()
-    }
-
-    articles[index].count +=1 ;
-    countDiv.querySelector(".articles-count").value = articles[index].count;
-    updateTotals();
+    // y actualiza el count
+    document.getElementsByClassName("articles-count")[index].value = articles[index].count + 1;
+    updateCount(index);
 }
 
 function removeArticle(index){
