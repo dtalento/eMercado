@@ -34,9 +34,11 @@ function showArticles(){
                     <span class="price-tag">` + article.currency + ` ` + article.unitCost.toLocaleString() + `</span>
                 </div>
                 <div class="col-2">
-                    <input type="number" min="0" size="3" class="form-control articles-count" value="` + article.count + `" oninput="updateCount(` + index + `);">
-                    <button class="btn btn-sm btn-primary" onclick="reduceCount(` + index + `);">-</button>
-                    <button class="btn btn-sm btn-primary" onclick="addCount(` + index + `);">+</button><br>
+                    <input type="number" min="0" size="3" class="form-control articles-count" value="` + article.count + `">
+                    <button class="btn btn-sm btn-primary red-btn">-</button>
+                    <button class="btn btn-sm btn-primary add-btn">+</button><br>
+                    <button class="btn btn-sm btn-link rmv-btn">Quitar artículo</button>
+                    
                 </div>
                 <div class="col-3">
                     <span class="price-tag art-total"> UYU ???</span>
@@ -46,41 +48,46 @@ function showArticles(){
 
         articlesDiv.innerHTML = htmlContentToAppend;
 
-        articles.forEach((article, index) => {
-            //Si el count del articulo es 0 mostrar el boton de quitar articulo
-            if(article.count == 0){
-                removeButtonRender(index);
-            }
-        })
-
+        initInputs();
         updateTotals();
     }
 
 }
 
-function removeButtonRender(index){
-    let removeButton = document.createElement("button")
-    removeButton.innerHTML = "Quitar artículo";
-    removeButton.className = "btn btn-sm btn-link";
-    removeButton.addEventListener("click", () => removeArticle(index));
-    document.getElementsByClassName("articles-count")[index].parentElement.appendChild(removeButton);
+function initInputs(){
+    //addEventListener a los inputs de cada artículo
+    let inputs = document.getElementsByClassName("articles-count");
+    let redBtns = document.getElementsByClassName("red-btn");
+    let addBtns = document.getElementsByClassName("add-btn");
+    let rmvBtns = document.getElementsByClassName("rmv-btn");
+
+    articles.forEach((article, index) => {
+        inputs[index].addEventListener("input", () => updateCount(index) );
+        redBtns[index].addEventListener("click", () => reduceCount(index) );     
+        addBtns[index].addEventListener("click", () => addCount(index) );   
+        rmvBtns[index].addEventListener("click", () => removeArticle(index) );       
+        
+        //Si el count del articulo es 0 mostrar el boton de quitar articulo
+        if(article.count != 0){
+            rmvBtns[index].classList.add("rmv-btn-hidden");
+        }
+    });
 }
 
 function updateCount(index){
     //Modifica la ctdad del articulo cuando se entra en su input
-    let countInput = document.getElementsByClassName("articles-count")[index];
-    let countDiv = countInput.parentElement;
     let count = articles[index].count;
-    let newCount = parseInt(countInput.value);
+    let newCount = parseInt(document.getElementsByClassName("articles-count")[index].value);
 
     if( isNaN(newCount) || newCount.value < 0){
         newCount = count; //En el caso de input invalido mantener el viejo count
     } else {
         if ( count === 0 && newCount > 0){
-            countDiv.lastChild.remove(); //Quita el boton de eliminar articulo si aumento la cantidad de 0
+            //Esconde el boton de eliminar articulo si aumento la cantidad de 0
+            document.getElementsByClassName("rmv-btn")[index].classList.add("rmv-btn-hidden");
         } else if( newCount === 0 && count > 0){
-            //Pone el boton de eliminar articulo si la cantidad baja a 0
-            removeButtonRender(index);
+            //Muestra el boton de eliminar articulo si la cantidad baja a 0
+            document.getElementsByClassName("rmv-btn")[index].classList.remove("rmv-btn-hidden");
         }
     }
     articles[index].count = newCount; //Finalmente actualizo el count del array
