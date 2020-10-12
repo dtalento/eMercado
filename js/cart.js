@@ -1,4 +1,10 @@
 let articles = [];
+const shipping = {
+        standard : 0.05,
+        express : 0.07,
+        premium : 0.15,
+    }
+
 
 function getAndShowArticles(){
     //Cargamos los articulos del carrito y los mostramos
@@ -143,6 +149,25 @@ function updateTotals(){
         subtotal += articleTotal;
     })
     document.getElementById("subtotal").innerHTML = "UYU " + subtotal.toLocaleString();
+
+    let shipType = document.getElementById("ship-type").value;
+    if( shipType in shipping){
+        //Agrega el valor de envio y el total si el tipo de envio esta en shippment
+        let shipCost = subtotal*shipping[shipType];
+        document.getElementById("ship-cost").innerHTML = "UYU " + shipCost.toLocaleString();
+        document.getElementById("total").innerHTML = "UYU " + (shipCost+subtotal).toLocaleString();
+    }
+}
+
+function buyCart(event){
+    //Muestra un mensaje de compra con éxito luego del submit de la forma de compra
+    event.preventDefault();
+    getJSONData(CART_BUY_URL).then( function(resp){
+        if(resp.status == "ok"){    
+            msg = resp.data.msg;
+            alert(msg);
+        }
+    });
 }
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
@@ -150,4 +175,6 @@ function updateTotals(){
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e){
     getAndShowArticles();
+    document.getElementById("ship-type").addEventListener("input", updateTotals);
+    document.getElementById("buy-form").addEventListener("submit", buyCart);
 });

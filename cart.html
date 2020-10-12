@@ -103,62 +103,63 @@
     <div id="articles"></div>
     
     <hr>
-    <div class="row">
-      <div class="col-3"></div>
-      <div class="col-4">
-        <label> Dirección del envío
-          <input type="text" class="form-control" name="address" placeholder="Calle, Número, Esquina">
-        </label>
-        <label> País
-          <input type="text" class="form-control" name="country">
-        </label>
-      </div>
-      <div class="col-2"><h4>Subtotal</h4></div>
-      <div class="col-3"><span class="price-tag" id="subtotal"></span></div>
-    </div>
 
-    <div class="row">
-      <div class="col-3"></div>
-      <div class="col-4">
-        <label>Tipo de envío 
-            <select name="ship-type" id="ship-type" class="custom-select custom-select-sm">
-            <option value="standard" selected>Estándar (5%)</option>
-            <option value="express">Express (7%)</option>
-            <option value="premium">Premium (15%)</option>
-            </select>
-        </label>
+    <form id="buy-form" action="#" method="POST">
+      <div class="row">
+        <div class="col-3"></div>
+        <div class="col-4">
+          <label for="address">Dirección del envío</label>
+          <input type="text" id="address" class="form-control" name="address" placeholder="Calle, Número, Esquina" required>
+          <label for="country">País</label>
+          <input type="text" id="country" class="form-control" name="country" required>
+        </div>
+        <div class="col-2"><h4>Subtotal</h4></div>
+        <div class="col-3"><span class="price-tag" id="subtotal"></span></div>
       </div>
-      <div class="col-2"><br><h4>Envío</h4></div>
-      <div class="col-3"><br><span class="price-tag" id="ship-cost">UYU ???</span></div>
-    </div>
-    <br><br>
-    
-    <div class="row">
-      <div class="col-7"></div>
-      <div class="col-2"><h2>Total</h2></div>
-      <div class="col-3">
-        <div> <span class="price-tag" id="total">UYU ???</span></div>
-      </div>
-    </div>
-    <br><br>
-    <div class="row">
-      <div class="col-7"></div>
-      <div class="col-2">
-        <label for="payment">Forma de pago</label>
-      </div>
-      <div class="col-3">
-        <select name="payment" id="payment" class="custom-select custom-select-sm">
-        <option value="transfer">Transferencia bancaria</option>
-        <option value="credit">Tarjeta de crédito</option>
-        </select>
-      </div>
-    </div>
 
-    <div class="row">
-      <div class="col-9"></div>
-      <div class="col-3"><button class="btn btn-block btn-success">Comprar</button></div>
-    </div>
-  
+      <div class="row">
+        <div class="col-3"></div>
+        <div class="col-4">
+          <label for="ship-type">Tipo de envío</label> 
+          <select name="ship-type" id="ship-type" class="custom-select custom-select-sm" required>
+          <option value="" disabled selected>Elige el tipo de envío</option>
+          <option value="standard">Estándar (5%)</option>
+          <option value="express">Express (7%)</option>
+          <option value="premium">Premium (15%)</option>
+          </select>
+        </div>
+        <div class="col-2"><br><h4>Envío</h4></div>
+        <div class="col-3"><br><div class="price-tag" id="ship-cost"></div></div>
+      </div>
+      <br><br>
+      
+      <div class="row">
+        <div class="col-7"></div>
+        <div class="col-2"><h2>Total</h2></div>
+        <div class="col-3">
+          <div> <span class="price-tag" id="total"></span></div>
+        </div>
+      </div>
+      <br><br>
+      <div class="row">
+        <div class="col-7"></div>
+        <div class="col-2">
+          <label for="payment">Forma de pago</label>
+        </div>
+        <div class="col-3">
+          <select name="payment" id="payment" class="custom-select custom-select-sm" required>
+          <option value="" disabled selected>Elige la forma de pago</option>
+          <option value="transfer">Transferencia bancaria</option>
+          <option value="credit">Tarjeta de crédito</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-9"></div>
+        <div class="col-3"><input type="submit" class="btn btn-block btn-success" value="Comprar"></div>
+      </div>
+    </form>
   </main>
   <div id="spinner-wrapper">
     <div class="lds-ring">
