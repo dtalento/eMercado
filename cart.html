@@ -132,35 +132,48 @@
         <div class="col-3"><br><div class="price-tag" id="ship-cost"></div></div>
       </div>
       <br><br>
-      
-      <div class="row">
-        <div class="col-7"></div>
-        <div class="col-2"><h2>Total</h2></div>
-        <div class="col-3">
-          <div> <span class="price-tag" id="total"></span></div>
-        </div>
-      </div>
-      <br><br>
-      <div class="row">
-        <div class="col-7"></div>
-        <div class="col-2">
-          <label for="payment">Forma de pago</label>
-        </div>
-        <div class="col-3">
-          <select name="payment" id="payment" class="custom-select custom-select-sm" required>
-          <option value="" disabled selected>Elige la forma de pago</option>
-          <option value="transfer">Transferencia bancaria</option>
-          <option value="credit">Tarjeta de crédito</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-9"></div>
-        <div class="col-3"><input type="submit" class="btn btn-block btn-success" value="Comprar"></div>
-      </div>
     </form>
+    
+    <div class="row">
+      <div class="col-7"></div>
+      <div class="col-2"><h2>Total</h2></div>
+      <div class="col-3">
+        <div> <span class="price-tag" id="total"></span></div>
+      </div>
+    </div>
+    <br><br>
+    <div class="row">
+      <div class="col-7"></div>
+      <div class="col-2">
+        <label for="payment">Forma de pago</label>
+      </div>
+      <div class="col-3">
+        <button id="payment-btn" class="btn btn-block btn-outline-danger" data-toggle="modal" data-target="#payment-modal">Elige la forma de pago</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-9"></div>
+      <div class="col-3"><input type="submit" class="btn btn-block btn-success" value="Comprar" form="buy-form"></div>
+    </div>
+  
   </main>
+  <div class="modal" id="payment-modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header"><h3>Elige la forma de pago</h3></div>
+        <div class="modal-body">
+          <select name="payment" id="payment" class="custom-select custom-select-sm" form="buy-form" required>
+            <option value="" disabled selected>Elige la forma de pago</option>
+            <option value="transfer">Transferencia bancaria</option>
+            <option value="credit">Tarjeta de crédito</option>
+            </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal" >Hecho</button>
+        </div>
+      </div>
+  </div>
   <div id="spinner-wrapper">
     <div class="lds-ring">
       <div></div>

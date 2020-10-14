@@ -1,9 +1,13 @@
 let articles = [];
 const shipping = {
-        standard : 0.05,
-        express : 0.07,
-        premium : 0.15,
-    }
+    standard : 0.05,
+    express : 0.07,
+    premium : 0.15,
+};
+const paymentText = {
+    transfer : "Transferencia bancaria",
+    credit : "Tarjeta de crédito",
+};
 
 
 function getAndShowArticles(){
@@ -159,6 +163,32 @@ function updateTotals(){
     }
 }
 
+function paymentBtnText(){
+    //muestra la forma de pago si ha sido elegida, sino un msg
+    let payment = document.getElementById("payment").value;
+    let paymentBtn = document.getElementById("payment-btn");
+    if(payment in paymentText){
+        //si se eligio una forma de pago valida mostrarla en el boton
+        //y mostrar el boton verde
+        paymentBtn.innerHTML = paymentText[payment];
+        paymentBtn.classList.remove("btn-outline-danger");
+        paymentBtn.classList.add("btn-outline-success");
+    } else {
+        paymentBtn.innerHTML = "No has elegido la forma de pago";
+    }
+}
+
+function paymentBtnInit(){
+    //agrega los EventListener que dan funcionalidad al boton de forma de pago
+    //muestra la forma de pago en el boton y "Cambiar" cuando esta el cursor en el
+    let paymentBtn = document.getElementById("payment-btn");
+    paymentBtn.addEventListener("mouseover", () => {
+        paymentBtn.innerHTML = "Cambiar";
+    });
+    paymentBtn.addEventListener("mouseout", paymentBtnText);
+    paymentBtnText();
+}
+
 function buyCart(event){
     //Muestra un mensaje de compra con éxito luego del submit de la forma de compra
     event.preventDefault();
@@ -176,5 +206,7 @@ function buyCart(event){
 document.addEventListener("DOMContentLoaded", function(e){
     getAndShowArticles();
     document.getElementById("ship-type").addEventListener("input", updateTotals);
+    paymentBtnInit();
+    document.getElementById("payment").addEventListener("input", paymentBtnText);
     document.getElementById("buy-form").addEventListener("submit", buyCart);
 });
