@@ -142,12 +142,12 @@ function dismissRemoved(event){
 
 function updateTotals(){
     //Actualiza el Subtotal y Total
-    articleTotalSpan = document.getElementsByClassName("art-total");
+    let articleTotalSpan = document.getElementsByClassName("art-total");
 
     let subtotal = 0;
     articles.forEach((article, index) => {
         //El precio del artículo en dolares cambiarlo a pesos
-        articleTotal = (article.currency == "USD" ? 40 : 1)*article.unitCost*article.count; 
+        let articleTotal = (article.currency == "USD" ? 40 : 1)*article.unitCost*article.count; 
         articleTotalSpan[index].innerHTML = "UYU " + articleTotal.toLocaleString();
 
         subtotal += articleTotal;
