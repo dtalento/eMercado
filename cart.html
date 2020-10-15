@@ -163,11 +163,24 @@
       <div class="modal-content">
         <div class="modal-header"><h3>Elige la forma de pago</h3></div>
         <div class="modal-body">
+          <small>Nota: Esta es una transacción ficticia, no usar datos reales.</small>
+          <fieldset>
+            <label><input class="form-check form-check-inline" type="radio" name="payment" form="buy-form" required value="transfer"> Transferencia bancaria</label><br>
+            <label>Número de cuenta <input type="text" name="transfer-num" form="buy-form" required disabled></label>
+          </fieldset>
+          <hr>
+          <fieldset>
+            <label><input class="form-check form-check-inline" type="radio" name="payment" form="buy-form" required value="credit"> Tarjeta de crédito</label><br>
+            <label>Número de tarjeta <input type="text" name="credit-num" form="buy-form" required disabled></label>
+            <label>Código de seguridad <input type="text" name="credit-code" form="buy-form" required disabled></label>
+            <label>Vencimiento <input type="text" name="credit-exp" form="buy-form" required disabled></label>
+          </fieldset>
+          <!-- 
           <select name="payment" id="payment" class="custom-select custom-select-sm" form="buy-form" required>
             <option value="" disabled selected>Elige la forma de pago</option>
             <option value="transfer">Transferencia bancaria</option>
             <option value="credit">Tarjeta de crédito</option>
-            </select>
+            </select> -->
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" data-dismiss="modal" >Hecho</button>

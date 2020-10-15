@@ -163,9 +163,28 @@ function updateTotals(){
     }
 }
 
+function changePayment(){
+    //cambia los campos a entrar dependiendo de la forma de pago
+    let buyForm = document.getElementById("buy-form");
+    let payment = buyForm["payment"].value;
+
+    if(payment === "transfer"){
+        buyForm["transfer-num"].removeAttribute("disabled");
+        buyForm["credit-num"].setAttribute("disabled","");
+        buyForm["credit-code"].setAttribute("disabled","");
+        buyForm["credit-exp"].setAttribute("disabled","");
+    } else if(payment === "credit") {
+        buyForm["transfer-num"].setAttribute("disabled","");
+        buyForm["credit-num"].removeAttribute("disabled");
+        buyForm["credit-code"].removeAttribute("disabled");
+        buyForm["credit-exp"].removeAttribute("disabled");
+    }
+    paymentBtnText(); //actualiza el texto del boton
+}
+
 function paymentBtnText(){
     //muestra la forma de pago si ha sido elegida, sino un msg
-    let payment = document.getElementById("payment").value;
+    let payment = document.getElementById("buy-form")["payment"].value;
     let paymentBtn = document.getElementById("payment-btn");
     if(payment in paymentText){
         //si se eligio una forma de pago valida mostrarla en el boton
@@ -207,6 +226,6 @@ document.addEventListener("DOMContentLoaded", function(e){
     getAndShowArticles();
     document.getElementById("ship-type").addEventListener("input", updateTotals);
     paymentBtnInit();
-    document.getElementById("payment").addEventListener("input", paymentBtnText);
+    document.getElementById("buy-form")["payment"].forEach( radio => { radio.addEventListener("input", changePayment) });
     document.getElementById("buy-form").addEventListener("submit", buyCart);
 });
