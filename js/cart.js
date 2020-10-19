@@ -8,6 +8,7 @@ const paymentText = {
     transfer : "Transferencia bancaria",
     credit : "Tarjeta de crédito",
 };
+const USDtoUYU = 40;
 
 
 function getAndShowArticles(){
@@ -147,7 +148,7 @@ function updateTotals(){
     let subtotal = 0;
     articles.forEach((article, index) => {
         //El precio del artículo en dolares cambiarlo a pesos
-        let articleTotal = (article.currency == "USD" ? 40 : 1)*article.unitCost*article.count; 
+        let articleTotal = (article.currency == "USD" ? USDtoUYU : 1)*article.unitCost*article.count; 
         articleTotalSpan[index].innerHTML = "UYU " + articleTotal.toLocaleString();
 
         subtotal += articleTotal;
