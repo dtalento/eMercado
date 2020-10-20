@@ -4,9 +4,15 @@ const shipping = {
     express : 0.07,
     premium : 0.15,
 };
-const paymentText = {
-    transfer : "Transferencia bancaria",
-    credit : "Tarjeta de crédito",
+const paymentType = {
+    transfer : {
+        id : "transfer",
+        text : "Transferencia bancaria",
+    } ,
+    credit : {
+        id : "credit",
+        text : "Tarjeta de crédito",
+    } ,
 };
 const USDtoUYU = 40;
 
@@ -171,10 +177,10 @@ function changePayment(){
     let transferFields = document.getElementById("transfer-fields");
     let creditFields = document.getElementById("credit-fields");
 
-    if(payment === "transfer"){
+    if(payment === paymentType.transfer.id){
         transferFields.removeAttribute("disabled");
         creditFields.setAttribute("disabled","");
-    } else if(payment === "credit") {
+    } else if(payment === paymentType.credit.id) {
         transferFields.setAttribute("disabled","");
         creditFields.removeAttribute("disabled");
     }
@@ -185,10 +191,10 @@ function paymentBtnText(){
     //muestra la forma de pago si ha sido elegida, sino un msg
     let payment = document.getElementById("buy-form")["payment"].value;
     let paymentBtn = document.getElementById("payment-btn");
-    if(payment in paymentText){
+    if(payment in paymentType){
         //si se eligio una forma de pago valida mostrarla en el boton
         //y mostrar el boton verde
-        paymentBtn.innerHTML = paymentText[payment];
+        paymentBtn.innerHTML = paymentType[payment].text;
         paymentBtn.classList.remove("btn-outline-danger");
         paymentBtn.classList.add("btn-outline-success");
     } else {
