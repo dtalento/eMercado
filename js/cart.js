@@ -168,17 +168,15 @@ function changePayment(){
     //cambia los campos a entrar dependiendo de la forma de pago
     let buyForm = document.getElementById("buy-form");
     let payment = buyForm["payment"].value;
+    let transferFields = document.getElementById("transfer-fields");
+    let creditFields = document.getElementById("credit-fields");
 
     if(payment === "transfer"){
-        buyForm["transfer-num"].removeAttribute("disabled");
-        buyForm["credit-num"].setAttribute("disabled","");
-        buyForm["credit-code"].setAttribute("disabled","");
-        buyForm["credit-exp"].setAttribute("disabled","");
+        transferFields.removeAttribute("disabled");
+        creditFields.setAttribute("disabled","");
     } else if(payment === "credit") {
-        buyForm["transfer-num"].setAttribute("disabled","");
-        buyForm["credit-num"].removeAttribute("disabled");
-        buyForm["credit-code"].removeAttribute("disabled");
-        buyForm["credit-exp"].removeAttribute("disabled");
+        transferFields.setAttribute("disabled","");
+        creditFields.removeAttribute("disabled");
     }
     paymentBtnText(); //actualiza el texto del boton
 }
