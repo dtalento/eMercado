@@ -77,6 +77,30 @@
     .rmv-btn-hidden{
       visibility: hidden;
     }
+
+    #payment-modal fieldset{
+      display: flex;
+      flex-direction: column;
+    }
+    #payment-modal fieldset div{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    #payment-modal fieldset input{
+      border-radius: 0.25rem;
+      margin: 1px;
+      border: 1px solid;
+    }
+    #payment-modal fieldset input:valid{
+      border-color: #1e7e34 ;
+      box-shadow: 0px 0px 10px #1e7e34;
+    }
+    #payment-modal fieldset input:focus{
+      border-color: steelblue ;
+      box-shadow: 0px 0px 10px steelblue;
+    }
   </style>
 </head>
 
@@ -104,7 +128,7 @@
     
     <hr>
 
-    <form id="buy-form" action="#" method="POST">
+    <form id="buy-form" action="#" method="GET">
       <div class="row">
         <div class="col-3"></div>
         <div class="col-4">
@@ -164,20 +188,32 @@
         <div class="modal-header"><h3>Elige la forma de pago</h3></div>
         <div class="modal-body">
           <small>Nota: Esta es una transacción ficticia, no use datos reales.</small>
-          <label><input class="form-check form-check-inline" type="radio" name="payment" form="buy-form" required value="transfer"> Transferencia bancaria</label><br>
+          <label><input class="form-check form-check-inline" type="radio" name="payment" form="buy-form" required value="transfer"> Transferencia bancaria</label>
           <fieldset id="transfer-fields" disabled>
-            <label>Número de cuenta <input type="text" name="transfer-num" form="buy-form" required></label>
+            <div>
+              <label for="transfer-num">Número de cuenta</label>
+              <input type="text" id="transfer-num" name="transfer-num" form="buy-form" placeholder="De 10 a 15 digitos" required>
+            </div>
           </fieldset>
           <hr>
-          <label><input class="form-check form-check-inline" type="radio" name="payment" form="buy-form" required value="credit"> Tarjeta de crédito</label><br>
-          <fieldset id="credit-fields" disabled>            
-            <label>Número de tarjeta <input type="text" name="credit-num" form="buy-form" required></label>
-            <label>Código de seguridad <input type="text" name="credit-code" form="buy-form" required></label>
-            <label>Vencimiento <input type="text" name="credit-exp" form="buy-form" required></label>
+          <label><input class="form-check form-check-inline" type="radio" name="payment" form="buy-form" required value="credit"> Tarjeta de crédito</label>
+          <fieldset id="credit-fields" disabled>
+            <div>
+              <label for="credit-num">Número de tarjeta</label>
+              <input type="text" id="credit-num" name="credit-num" form="buy-form" placeholder="XXXX-XXXX-XXXX-XXXX" required>
+            </div>
+            <div>   
+              <label for="credit-code">Código de seguridad</label>
+              <input type="text" id="credit-code" name="credit-code" form="buy-form" placeholder="XXX" required>
+            </div>
+            <div>
+              <label for="credit-exp">Vencimiento</label>
+              <input type="text" id="credit-exp" name="credit-exp" form="buy-form" placeholder="mm/aa" required>
+            </div>
           </fieldset>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal" >Hecho</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" >Cerrar</button>
         </div>
       </div>
   </div>

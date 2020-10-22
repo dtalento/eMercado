@@ -8,14 +8,22 @@ const paymentType = {
     transfer : {
         id : "transfer",
         text : "Transferencia bancaria",
+        inputs : [
+            {name : "transfer-num", regex : /^\d{10,15}$/, valMsg : "Formato: de 10 a 15 dígitos"},
+        ],
     } ,
     credit : {
         id : "credit",
         text : "Tarjeta de crédito",
+        inputs : [
+            {name : "credit-num", regex : /^(\d{4,5}(-|\s)?){3}(\d{4,5})$/, valMsg : "Formato: 1234-5678-1234-5678"},
+            {name : "credit-code", regex : /^\d{3,4}$/, valMsg : "Formato: 3 o 4 dígitos"},
+            {name : "credit-exp", regex : /^\d{1,2}\/\d{2,4}$/, valMsg : "Formato: MM/AA"},
+        ],
     } ,
 };
 const USDtoUYU = 40;
-
+let selectedPayment;
 
 function getAndShowArticles(){
     //Cargamos los articulos del carrito y los mostramos
@@ -180,25 +188,31 @@ function changePayment(){
     if(payment === paymentType.transfer.id){
         transferFields.removeAttribute("disabled");
         creditFields.setAttribute("disabled","");
+        selectedPayment = paymentType.transfer;
     } else if(payment === paymentType.credit.id) {
         transferFields.setAttribute("disabled","");
         creditFields.removeAttribute("disabled");
+        selectedPayment = paymentType.credit;
     }
-    paymentBtnText(); //actualiza el texto del boton
 }
 
 function paymentBtnText(){
     //muestra la forma de pago si ha sido elegida, sino un msg
-    let payment = document.getElementById("buy-form")["payment"].value;
     let paymentBtn = document.getElementById("payment-btn");
-    if(payment in paymentType){
+    if(modalValidation()){
         //si se eligio una forma de pago valida mostrarla en el boton
         //y mostrar el boton verde
-        paymentBtn.innerHTML = paymentType[payment].text;
+        paymentBtn.innerHTML = selectedPayment.text;
         paymentBtn.classList.remove("btn-outline-danger");
         paymentBtn.classList.add("btn-outline-success");
-    } else {
+    } else if(selectedPayment === undefined){
+        paymentBtn.classList.add("btn-outline-danger");
+        paymentBtn.classList.remove("btn-outline-success");
         paymentBtn.innerHTML = "No has elegido la forma de pago";
+    } else {
+        paymentBtn.classList.add("btn-outline-danger");
+        paymentBtn.classList.remove("btn-outline-success");
+        paymentBtn.innerHTML = "Datos inválidos";
     }
 }
 
@@ -215,13 +229,63 @@ function paymentBtnInit(){
 
 function buyCart(event){
     //Muestra un mensaje de compra con éxito luego del submit de la forma de compra
-    event.preventDefault();
-    getJSONData(CART_BUY_URL).then( function(resp){
-        if(resp.status == "ok"){    
-            msg = resp.data.msg;
-            alert(msg);
-        }
+    
+    if( formValidation() ){
+        getJSONData(CART_BUY_URL).then( function(resp){
+            if(resp.status == "ok"){    
+                msg = resp.data.msg;
+                alert(msg);
+            }
+        });
+    } else {
+        event.preventDefault();
+        alert("Faltan completar datos!");
+    }
+    
+}
+
+
+function formValidation(){
+    //chequea que todos los inputs sean validos y que el carrito no este vacio
+    let isValid = true;
+    let countInputs = document.getElementsByClassName("articles-count");
+    let artQty = 0;
+    articles.forEach( (article, index) => { 
+        artQty += article.count; // cuenta la cantidad de articulos
+        isValid = isValid && countInputs[index].reportValidity(); // chequea que los inputs de ctdad sean validos
     });
+
+    if(artQty === 0){
+        alert("El carrito esta vacio")
+        return false;
+    }
+    
+
+    return isValid && modalValidation();
+}
+
+function modalValidation(){
+    //valida el contenido dentro del modal
+
+    let form = document.getElementById("buy-form");
+    if (selectedPayment === undefined){
+        return false;
+    } else {
+        for (let i = 0; i < selectedPayment.inputs.length; i++){
+            //para cada input, checkea si es valido
+            let input = selectedPayment.inputs[i];
+            if( !input.regex.test(form[input.name].value)){
+                //si no es valido algun input return false
+                form[input.name].setCustomValidity(input.valMsg); //Muestra un mensaje adecuado
+                form[input.name].reportValidity();
+                return false;
+            } else {
+                form[input.name].setCustomValidity(""); //mostrar input como valido
+            }
+        }
+    }
+    
+    return true; //si todos los inputs son validos return true
 }
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
@@ -232,5 +296,8 @@ document.addEventListener("DOMContentLoaded", function(e){
     document.getElementById("ship-type").addEventListener("input", updateTotals);
     paymentBtnInit();
     document.getElementById("buy-form")["payment"].forEach( radio => { radio.addEventListener("input", changePayment) });
+    //verifica la validez del modal en cada input que haga el usuario
+    document.querySelectorAll("#payment-modal input").forEach( inp => {inp.addEventListener("input", modalValidation)});
+    $('#payment-modal').on('hidden.bs.modal', paymentBtnText) //cambiar el texto del boton cuando se oculta el modal
     document.getElementById("buy-form").addEventListener("submit", buyCart);
 });
