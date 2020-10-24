@@ -22,6 +22,7 @@ const paymentType = {
         ],
     } ,
 };
+const shippingInputs = ["address", "country", "ship-type"];
 const USDtoUYU = 40;
 let selectedPayment;
 
@@ -230,15 +231,18 @@ function paymentBtnInit(){
 function buyCart(event){
     //Muestra un mensaje de compra con éxito luego del submit de la forma de compra
     
+    event.preventDefault();
     if( formValidation() ){
         getJSONData(CART_BUY_URL).then( function(resp){
+            //Peticiona el mensaje y lo muestra antes de submit
             if(resp.status == "ok"){    
                 msg = resp.data.msg;
                 alert(msg);
+                document.getElementById("buy-form").submit();
             }
         });
     } else {
-        event.preventDefault();
+        //mostrar msg en caso que la validacion fallida
         alert("Faltan completar datos!");
     }
     
@@ -247,21 +251,30 @@ function buyCart(event){
 
 function formValidation(){
     //chequea que todos los inputs sean validos y que el carrito no este vacio
-    let isValid = true;
+    
     let countInputs = document.getElementsByClassName("articles-count");
     let artQty = 0;
-    articles.forEach( (article, index) => { 
-        artQty += article.count; // cuenta la cantidad de articulos
-        isValid = isValid && countInputs[index].reportValidity(); // chequea que los inputs de ctdad sean validos
-    });
+    for( let i = 0; i < articles.length; i++ ){
+        artQty += articles[i].count; //cuenta la cantidad de articulos
+        let countValid = countInputs[i].reportValidity();
+        if(!countValid){
+           return false; //chequea que los inputs de ctdad sean validos
+        } 
+    }
 
     if(artQty === 0){
         alert("El carrito esta vacio")
         return false;
     }
     
-
-    return isValid && modalValidation();
+    for( let i = 0; i < shippingInputs.length; i++ ){
+        let shipValid = document.getElementById(shippingInputs[i]).reportValidity();
+        if(!shipValid){
+            return false; //chequea que los inputs de envio esten correctos
+        }
+    }
+    //si el resto de los inputs es correcto return si el modal es valido
+    return modalValidation(); 
 }
 
 function modalValidation(){
