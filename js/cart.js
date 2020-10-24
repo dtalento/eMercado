@@ -60,7 +60,7 @@ function showArticles(){
                     <span class="price-tag">` + article.currency + ` ` + article.unitCost.toLocaleString() + `</span>
                 </div>
                 <div class="col-2">
-                    <input type="number" min="0" size="3" class="form-control articles-count" value="` + article.count + `">
+                    <input type="number" min="0" size="3" class="form-control articles-count" value="` + article.count + `" required>
                     <button class="btn btn-sm btn-primary red-btn">-</button>
                     <button class="btn btn-sm btn-primary add-btn">+</button><br>
                     <button class="btn btn-sm btn-link rmv-btn">Quitar artículo</button>
