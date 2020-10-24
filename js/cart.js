@@ -238,6 +238,17 @@ function buyCart(event){
             if(resp.status == "ok"){    
                 msg = resp.data.msg;
                 alert(msg);
+                
+                //agregar los id de los articulos a la forma
+                //en este caso usamos GET en la forma como demostracion pero lo mejor seria con POST
+                artIDInput = document.createElement("input");
+                artIDInput.type = "hidden";
+                artIDInput.name = "articlesID";
+                //pasamos los nombres de los articulos con count > 0 a un string y lo ponemos en un input
+                //oculto al final de la forma
+                artIDInput.value = JSON.stringify( articles.filter(art => art.count > 0).map(art => art.name) );
+                document.getElementById("buy-form").appendChild(artIDInput);
+
                 document.getElementById("buy-form").submit();
             }
         });
