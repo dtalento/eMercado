@@ -27,6 +27,41 @@
         font-size: 3.5rem;
       }
     }
+
+    .center-row{
+     display: flex;
+     justify-content: center; 
+    }
+    
+    #profile-photo{
+      max-height: 10em;
+      max-width: 10em;
+      border-radius: 5000px;
+      margin-right: 1em;
+    }
+
+    #user-info-col{
+      padding: 1em;
+    }
+
+    .user-info-tag{
+      color: steelblue;
+      display: inline-block;
+      min-width: 5em;
+      font-weight: bold;
+    }
+
+    .user-info::-webkit-outer-spin-button,
+    .user-info::-webkit-inner-spin-button{
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    input.user-info{
+      width: 15em;
+      border-style: hidden;
+      -moz-appearance: textfield;
+    }
   </style>
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
@@ -42,14 +77,38 @@
       <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
     </div>
   </nav>
-  <div class="container p-5">
-    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-      <h4 class="alert-heading">¡A trabajar! :)</h4>
-      <p>Esta sección corresponde a: Entrega 7 (Fecha de entrega: 8/11/202020) -> Punto 1 y 2.</p>
-      <hr>
-      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
+  <main class="text-center p-6 container"> 
+    <br><h2>Mi perfil</h2>
+    <hr>
+    <div class="row center-row">
+      <a href="#" ><img src="https://i.ibb.co/fvnTgsR/mrmeow.jpg" alt="Foto de perfil" id="profile-photo"></a>
+      <div id="user-info-col" class="text-left">
+        <div>
+          <span class="user-info-tag">Nombre:</span>
+          <input type="text" id="username" class="user-info" readonly>
+          <button class="btn btn-link">Cambiar</button>
+        </div>
+        <div>
+          <span class="user-info-tag">Edad:</span>
+          <input type="number" name="" id="user-age" class="user-info" min="0" max="150" readonly>
+          <button class="btn btn-link">Cambiar</button>
+        </div>
+        <div>
+          <span class="user-info-tag">Email:</span>
+          <input type="email" id="user-email" class="user-info" readonly>
+          <button class="btn btn-link">Cambiar</button>
+        </div>
+        <div>
+          <span class="user-info-tag">Teléfono:</span>
+          <input type="text" name="" id="user-telnum" class="user-info" readonly>
+          <button class="btn btn-link">Cambiar</button>
+        </div>
+      </div>
     </div>
-  </div>
+    <div class="row center-row">
+      <button type="button" class="btn btn-primary">Guardar Cambios</button>
+    </div>
+  </main>
   <footer class="text-muted bg-light">
     <div class="container">
       <p>Este sitio forma parte de Desarrollo Web - JAP - 2020</p>
