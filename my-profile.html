@@ -44,6 +44,10 @@
       padding: 1em;
     }
 
+    .user-info-field{
+      min-height: 30px;
+      margin: 3px;
+    }
     .user-info-tag{
       color: steelblue;
       display: inline-block;
@@ -51,15 +55,14 @@
       font-weight: bold;
     }
 
-    .user-info::-webkit-outer-spin-button,
-    .user-info::-webkit-inner-spin-button{
+    .user-info-field input::-webkit-outer-spin-button,
+    .user-info-field input::-webkit-inner-spin-button{
       -webkit-appearance: none;
       margin: 0;
     }
 
-    input.user-info{
+    .user-info-field input{
       width: 15em;
-      border-style: hidden;
       -moz-appearance: textfield;
     }
   </style>
@@ -80,34 +83,46 @@
   <main class="text-center p-6 container"> 
     <br><h2>Mi perfil</h2>
     <hr>
+    <form action="#" method="POST">
     <div class="row center-row">
-      <a href="#" ><img src="https://i.ibb.co/fvnTgsR/mrmeow.jpg" alt="Foto de perfil" id="profile-photo"></a>
+      <a href="#"><img src="" alt="Foto de perfil" id="profile-photo"></a>
       <div id="user-info-col" class="text-left">
-        <div>
+        <div class="user-info-field">
+          <span class="user-info-tag">Usuario:</span>
+          <span id="username"></span>
+        </div>
+        <div class="user-info-field">
           <span class="user-info-tag">Nombre:</span>
-          <input type="text" id="username" class="user-info" readonly>
-          <button class="btn btn-link">Cambiar</button>
+          <span class="user-info" id="user-name"></span>
+          <input type="text" id="user-name" hidden>
         </div>
-        <div>
+        <div class="user-info-field">
+          <span class="user-info-tag">Apellido:</span>
+          <span class="user-info" id="user-surname"></span>
+          <input type="text" id="user-surname"  hidden>
+        </div>
+        <div class="user-info-field">
           <span class="user-info-tag">Edad:</span>
-          <input type="number" name="" id="user-age" class="user-info" min="0" max="150" readonly>
-          <button class="btn btn-link">Cambiar</button>
+          <span class="user-info" id="user-age"></span>
+          <input type="number" name="" id="user-age-input" min="0" max="150" hidden>
         </div>
-        <div>
+        <div class="user-info-field">
           <span class="user-info-tag">Email:</span>
-          <input type="email" id="user-email" class="user-info" readonly>
-          <button class="btn btn-link">Cambiar</button>
+          <span class="user-info" id="user-email"></span>
+          <input type="email" id="user-email-input" hidden>
         </div>
-        <div>
+        <div class="user-info-field">
           <span class="user-info-tag">Teléfono:</span>
-          <input type="text" name="" id="user-telnum" class="user-info" readonly>
-          <button class="btn btn-link">Cambiar</button>
+          <span class="user-info" id="user-telnum"></span>
+          <input type="text" name="" id="user-telnum-input" hidden>
         </div>
       </div>
     </div>
-    <div class="row center-row">
-      <button type="button" class="btn btn-primary">Guardar Cambios</button>
-    </div>
+      <div class="row center-row">
+        <button type="button" class="btn btn-primary" hidden>Guardar Cambios</button>
+        <button type="reset" class="btn btn-sm btn-secondary" hidden>Limpiar</button>
+      </div>
+    </form>
   </main>
   <footer class="text-muted bg-light">
     <div class="container">
