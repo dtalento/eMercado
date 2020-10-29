@@ -18,7 +18,7 @@ function saveUserData(userData){
 }
 
 function getUserData(){
-    const defaultImageUrl = "https://i.ibb.co/fvnTgsR/mrmeow.jpg";
+    const defaultImageUrl = "https://i.ibb.co/MsTXrMf/f184b890-fcab-43d9-9804-86545433d6d3.png";
     const currentUser = window.sessionStorage.getItem("currentUser");
     //cargamos los datos del login del usuario con sesion iniciada
     let userData = JSON.parse(window.localStorage.getItem(USER_ARRAY))
