@@ -1,7 +1,20 @@
 const DATASTORAGENAME = "userRegister";
 
 function showUserData(userData){
+    const fieldsNames = ["name", "surname", "email", "telnum"]
+    fieldsNames.forEach(fieldName => {
+        document.getElementById("user-" + fieldName).innerHTML = userData.profile[fieldName];
+    });
+    document.getElementById("username").innerHTML = userData.username;
+    document.getElementById("profile-photo").src = userData.profile.img;
+}
 
+function saveUserData(userData){
+    const currentUser = window.sessionStorage.getItem("currentUser");
+    let userArray = JSON.parse(window.localStorage.getItem(DATASTORAGENAME)).userArray;
+    let newArray = userArray.filter( user => user.username !== currentUser);
+    newArray.push(userData);
+    window.localStorage.setItem(DATASTORAGENAME, newArray);
 }
 
 function getUserData(){
@@ -26,18 +39,15 @@ function getUserData(){
                 name : "",
                 surname : "",
                 email : "",
-                tel : "",
+                telnum : "",
                 img : canvas.toDataURL("image/png"),
             };
+            saveUserData(userData);
+            showUserData(userData);
         });
     }
-    console.log(userData);
-    showUserData(userData);
 }
 
-function saveUserData(userData){
-
-}
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
