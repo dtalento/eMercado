@@ -69,10 +69,21 @@ function editUserData(event){
     const form = document.getElementById("new-info-form");
     const fieldsNames = ["name", "surname", "age", "email", "telnum"];
     let newUserData = {};
-    fieldsNames.forEach(field => {newUserData[field] = form[field].value;});
+    fieldsNames.forEach(field => {
+        if(form[field].value !== ""){
+            //cambia los valores no vacios
+            newUserData[field] = form[field].value;
+        }
+    });
+    let photoInput = form["photo-input"].files[0];
+    if(form["photo-input"].willValidate){
+        //si hay nueva foto valida actualizar el src
+        newUserData.img = URL.createObjectURL(photoInput);
+    }
     hideEditForm();
     saveUserData(newUserData);
 }
+
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
