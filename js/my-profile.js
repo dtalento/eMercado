@@ -45,6 +45,9 @@ function getUserData(){
             saveUserData(userData);
             showUserData(userData);
         });
+    } else {
+        //en caso de que ya existan datos solo mostrarlos
+        showUserData(userData);
     }
 }
 
