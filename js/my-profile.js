@@ -76,7 +76,7 @@ function editUserData(event){
         }
     });
     let photoInput = form["photo-input"].files[0];
-    if(form["photo-input"].willValidate){
+    if(form["photo-input"].willValidate && form["photo-input"].files.length > 0){
         //si hay nueva foto valida actualizar el src
         newUserData.img = URL.createObjectURL(photoInput);
     }
