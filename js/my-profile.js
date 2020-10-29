@@ -51,9 +51,35 @@ function getUserData(){
     }
 }
 
+function enableEditForm(){
+    //muestro los inputs de la forma de edicion de los datos del usuario
+    document.querySelectorAll(".new-info-input").forEach( inp => {inp.removeAttribute("hidden")});
+    document.getElementById("btn-edit").setAttribute("hidden","");
+}
+
+function hideEditForm(){
+    //oculta los inputs de la forma de edicion de los datos del usuario
+    document.querySelectorAll(".new-info-input").forEach( inp => {inp.setAttribute("hidden","")});
+    document.getElementById("btn-edit").removeAttribute("hidden");
+}
+
+function editUserData(event){
+    //itera en los campos modificables y guarda los cambios
+    event.preventDefault();
+    const form = document.getElementById("new-info-form");
+    const fieldsNames = ["name", "surname", "email", "telnum", "img"];
+    let newUserData = {};
+    fieldsNames.forEach(field => {newUserData[field] = form[field]});
+    hideEditForm();
+    saveUserData(newUserData);
+    showUserData(newUserData);
+}
+
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function (e) {
-        getUserData();
+    getUserData();
+    document.getElementById("btn-edit").addEventListener("click", enableEditForm);
+    document.getElementById("new-info-form").addEventListener("submit", editUserData);
 });
