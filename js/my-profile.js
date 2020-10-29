@@ -1,20 +1,23 @@
 const USER_ARRAY = "userArray";
 
 function showUserData(userData){
-    const fieldsNames = ["name", "surname", "email", "telnum"]
+    //llena los datos en el html
+    const fieldsNames = ["name", "surname", "age", "email", "telnum"];
     fieldsNames.forEach(fieldName => {
-        document.getElementById("user-" + fieldName).innerHTML = userData.profile[fieldName];
+        document.getElementById("user-" + fieldName).innerHTML = userData[fieldName];
     });
     document.getElementById("username").innerHTML = userData.username;
-    document.getElementById("profile-photo").src = userData.profile.img;
+    document.getElementById("profile-photo").src = userData.img;
 }
 
-function saveUserData(userData){
+function saveUserData(newUserData){
+    //actualiza los nuevos datos del usuario y los guarda
     const currentUser = window.sessionStorage.getItem("currentUser");
     let userArray = JSON.parse(window.localStorage.getItem(USER_ARRAY));
-    let newArray = userArray.filter( user => user.username !== currentUser);
-    newArray.push(userData);
-    window.localStorage.setItem(USER_ARRAY, JSON.stringify(newArray));
+    let userData = userArray.find( user => user.username === currentUser);
+    Object.keys(newUserData).forEach( fieldName => { userData[fieldName] = newUserData[fieldName];});
+    window.localStorage.setItem(USER_ARRAY, JSON.stringify(userArray));
+    showUserData(userData);
 }
 
 function getUserData(){
@@ -24,7 +27,7 @@ function getUserData(){
     let userData = JSON.parse(window.localStorage.getItem(USER_ARRAY))
     .find( user => user.username === currentUser);
     
-    if ( userData.profile === undefined ){
+    if ( userData.name === undefined ){
         //si los datos del perfil no existe setear el default
         let profileImg = document.createElement("img"); 
         profileImg.src = defaultImageUrl;
@@ -35,15 +38,12 @@ function getUserData(){
             canvas.width = profileImg.width;
             canvas.height = profileImg.height;
             canvas.getContext("2d").drawImage(profileImg, 0, 0, profileImg.width, profileImg.height);
-            userData.profile = {
-                name : "",
-                surname : "",
-                email : "",
-                telnum : "",
-                img : canvas.toDataURL("image/png"),
-            };
+            //setea los defaults
+            const fieldsNames = ["name", "surname", "age", "email", "telnum"];
+            fieldsNames.forEach( fieldName => { userData[fieldName] = "";})
+            userData.img = canvas.toDataURL("image/png");
+
             saveUserData(userData);
-            showUserData(userData);
         });
     } else {
         //en caso de que ya existan datos solo mostrarlos
@@ -67,12 +67,11 @@ function editUserData(event){
     //itera en los campos modificables y guarda los cambios
     event.preventDefault();
     const form = document.getElementById("new-info-form");
-    const fieldsNames = ["name", "surname", "email", "telnum", "img"];
+    const fieldsNames = ["name", "surname", "age", "email", "telnum"];
     let newUserData = {};
-    fieldsNames.forEach(field => {newUserData[field] = form[field]});
+    fieldsNames.forEach(field => {newUserData[field] = form[field].value;});
     hideEditForm();
     saveUserData(newUserData);
-    showUserData(newUserData);
 }
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
