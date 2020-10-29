@@ -1,4 +1,4 @@
-const DATASTORAGENAME = "userRegister";
+const USER_ARRAY = "userArray";
 
 function showUserData(userData){
     const fieldsNames = ["name", "surname", "email", "telnum"]
@@ -11,18 +11,18 @@ function showUserData(userData){
 
 function saveUserData(userData){
     const currentUser = window.sessionStorage.getItem("currentUser");
-    let userArray = JSON.parse(window.localStorage.getItem(DATASTORAGENAME)).userArray;
+    let userArray = JSON.parse(window.localStorage.getItem(USER_ARRAY));
     let newArray = userArray.filter( user => user.username !== currentUser);
     newArray.push(userData);
-    window.localStorage.setItem(DATASTORAGENAME, newArray);
+    window.localStorage.setItem(USER_ARRAY, JSON.stringify(newArray));
 }
 
 function getUserData(){
     const defaultImageUrl = "https://i.ibb.co/fvnTgsR/mrmeow.jpg";
     const currentUser = window.sessionStorage.getItem("currentUser");
     //cargamos los datos del login del usuario con sesion iniciada
-    let userData = JSON.parse(window.localStorage.getItem(DATASTORAGENAME))
-    .userArray.find( user => user.username === currentUser);
+    let userData = JSON.parse(window.localStorage.getItem(USER_ARRAY))
+    .find( user => user.username === currentUser);
     
     if ( userData.profile === undefined ){
         //si los datos del perfil no existe setear el default

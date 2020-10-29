@@ -1,3 +1,5 @@
+const USER_ARRAY = "userArray"; 
+
 var logInDone = function(userData){
   //guardar el nombre de usuario actual y setear la login flag
   if (document.getElementById("remember").checked){
@@ -34,9 +36,9 @@ var logInValidation = function(){
         password : loginForm.pwd.value ,
       }
 
-      if (localStorage.getItem("userRegister") === null){
+      if (localStorage.getItem(USER_ARRAY) === null){
         //en caso de que no haya un registro crearlo y logearlo
-        localStorage.setItem( "userRegister", JSON.stringify({userArray : [ userData ] }) );
+        localStorage.setItem(USER_ARRAY, JSON.stringify([userData]) );
         logInDone(userData);
       } else {
         //de lo contrario buscarlo buscar en el registro
@@ -66,13 +68,13 @@ var logInValidation = function(){
 }
 
 var userValidation = function(userData){
-  let userArray = JSON.parse(localStorage.getItem("userRegister")).userArray ;
+  let userArray = JSON.parse(localStorage.getItem(USER_ARRAY)) ;
   //Indice del usuario en el registro, en caso de que no este devuelve -1
   let index = userArray.findIndex(element => element.username === userData.username);
   if (index == -1){ 
     //en caso de que no encuentre el usuario agregarlo
     userArray.push(userData);
-    localStorage.setItem("userRegister", JSON.stringify({"userArray" : userArray}));
+    localStorage.setItem(USER_ARRAY, JSON.stringify(userArray) );
     return true ; //los nuevos datos son validos
   } else {
     //los datos son validos si el password es correcto
