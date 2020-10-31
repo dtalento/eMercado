@@ -1,5 +1,21 @@
 const USER_ARRAY = "userArray";
 
+function imgSrcToDataURL(imgSrc){
+    //devuelve una promesa que resulve con el valor de imgen URL
+    let img = document.createElement("img"); 
+    img.src = imgSrc;
+    img.crossOrigin = "anonymous"; //evita error de CORS
+    return new Promise( (resolve, reject) => {
+        img.addEventListener("load", function(){
+            let canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            canvas.getContext("2d").drawImage(img, 0, 0, img.width, img.height);
+            resolve(canvas.toDataURL("image/png"));        
+        });
+    });
+}
+
 function showUserData(userData){
     //llena los datos en el html
     const fieldsNames = ["name", "surname", "age", "email", "telnum"];
@@ -29,20 +45,11 @@ function getUserData(){
     
     if ( userData.name === undefined ){
         //si los datos del perfil no existe setear el default
-        let profileImg = document.createElement("img"); 
-        profileImg.src = defaultImageUrl;
-        profileImg.crossOrigin = "anonymous"; //evita error de CORS
-        profileImg.addEventListener("load", function(){
-            //esperamos que la imagen cargue para ponerla en un canvas y guardarla 
-            let canvas = document.createElement("canvas");
-            canvas.width = profileImg.width;
-            canvas.height = profileImg.height;
-            canvas.getContext("2d").drawImage(profileImg, 0, 0, profileImg.width, profileImg.height);
-            //setea los defaults
+        imgSrcToDataURL(defaultImageUrl).then( function(imgDataURL){
+            //setea los defaults despues de pasar la imagen a dataURL
             const fieldsNames = ["name", "surname", "age", "email", "telnum"];
             fieldsNames.forEach( fieldName => { userData[fieldName] = "";})
-            userData.img = canvas.toDataURL("image/png");
-
+            userData.img = imgDataURL;
             saveUserData(userData);
         });
     } else {
@@ -78,12 +85,17 @@ function editUserData(event){
     let photoInput = form["photo-input"].files[0];
     if(form["photo-input"].willValidate && form["photo-input"].files.length > 0){
         //si hay nueva foto valida actualizar el src
-        newUserData.img = URL.createObjectURL(photoInput);
-        form["photo-input"].value = "";
-        document.getElementById("btn-restore-photo").remove();
+        imgSrcToDataURL(URL.createObjectURL(photoInput)).then(function(imgDataURL){
+            newUserData.img = imgDataURL;
+            form["photo-input"].value = "";
+            document.getElementById("btn-restore-photo").remove();
+            hideEditForm();
+            saveUserData(newUserData);
+        });
+    } else {
+        hideEditForm();
+        saveUserData(newUserData);
     }
-    hideEditForm();
-    saveUserData(newUserData);
 }
 
 
