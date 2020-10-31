@@ -79,12 +79,39 @@ function editUserData(event){
     if(form["photo-input"].willValidate && form["photo-input"].files.length > 0){
         //si hay nueva foto valida actualizar el src
         newUserData.img = URL.createObjectURL(photoInput);
+        form["photo-input"].value = "";
+        document.getElementById("btn-restore-photo").remove();
     }
     hideEditForm();
     saveUserData(newUserData);
 }
 
 
+function previewPhoto(){
+    let photoInput = document.getElementById("photo-input");
+    let profileImg = document.getElementById("profile-photo");
+
+    if(photoInput.willValidate && photoInput.files.length > 0){
+        //si hay nueva foto valida guardar el src actual
+        // y actualizar el src. crea el boton de restaurar si no existe
+        let oldSrc = profileImg.src;
+        profileImg.src = URL.createObjectURL(photoInput.files[0]);
+
+        if (document.getElementById("btn-restore-photo") === null){
+            let resetBtn = document.createElement("button");
+            resetBtn.id = "btn-restore-photo";
+            resetBtn.className = "btn btn-sm btn-secondary";
+            resetBtn.innerHTML = "Cancelar";
+            photoInput.parentElement.appendChild(resetBtn);
+            resetBtn.addEventListener("click", () => {
+                //restaura la anterior foto de perfil y vacia el input
+                profileImg.src = oldSrc;
+                photoInput.value = "";
+                resetBtn.remove();
+            });
+        }    
+    }
+}
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
@@ -92,4 +119,5 @@ document.addEventListener("DOMContentLoaded", function (e) {
     getUserData();
     document.getElementById("btn-edit").addEventListener("click", enableEditForm);
     document.getElementById("new-info-form").addEventListener("submit", editUserData);
+    document.getElementById("photo-input").addEventListener("input", previewPhoto);
 });
