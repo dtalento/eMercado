@@ -114,7 +114,7 @@ function previewPhoto(){
             resetBtn.id = "btn-restore-photo";
             resetBtn.className = "btn btn-sm btn-secondary";
             resetBtn.innerHTML = "Cancelar";
-            photoInput.parentElement.appendChild(resetBtn);
+            document.getElementById("photo-btns").appendChild(resetBtn);
             resetBtn.addEventListener("click", () => {
                 //restaura la anterior foto de perfil y vacia el input
                 profileImg.src = oldSrc;
@@ -124,6 +124,16 @@ function previewPhoto(){
         }    
     }
 }
+
+function limpiarForma(){
+    //quita la foto (si hay) y vacia los inputs de la forma 
+    if (document.getElementById("btn-restore-photo") !== null){
+        document.getElementById("btn-restore-photo").click();
+    }
+    document.querySelectorAll("input.new-info-input").forEach( inp => {
+        inp.value = "";
+    });
+}
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
@@ -132,4 +142,5 @@ document.addEventListener("DOMContentLoaded", function (e) {
     document.getElementById("btn-edit").addEventListener("click", enableEditForm);
     document.getElementById("new-info-form").addEventListener("submit", editUserData);
     document.getElementById("photo-input").addEventListener("input", previewPhoto);
+    document.getElementById("btn-clear-form").addEventListener("click", limpiarForma);
 });

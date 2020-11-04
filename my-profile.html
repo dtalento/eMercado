@@ -30,13 +30,13 @@
 
     .center-row{
      display: flex;
+     flex-direction: column;
      justify-content: center; 
      align-items: center;
     }
     .center-row > div {
       display: flex;
       flex-direction: column;
-      max-width: 20%;
     }
     
     #profile-photo{
@@ -47,20 +47,63 @@
       margin-bottom: 1em;
     }
 
+    #photo-btns {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      min-width: 20%;
+      min-height: 40px;
+    }
+
+    #photo-btns .btn{
+      margin: 2px;
+      display: inline-block;
+      height: 36px;
+    }
+
+    #photo-input{
+      opacity: 0;
+      height: 0;
+    }
+
+    #photo-input-label{
+      color: white;
+      background-color: #007bff;
+      border-radius: 5px;
+      padding: 5px 20px;
+    }
+
+    #photo-input-label:hover{
+      background-color: #0069d9;
+    }
+
     #user-info-col{
       padding: 1em;
-      min-width: 50%;
+      min-width: 60%;
     }
 
     .user-info-field{
-      min-height: 30px;
+      min-height: 32px;
       margin: 3px;
+      padding: 5px;
+      background-color: rgba(145, 180, 230, 0.35);
+      border-radius: 5px;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: center;
+      justify-content: space-between;
     }
     .user-info-tag{
       color: steelblue;
       display: inline-block;
       min-width: 5em;
       font-weight: bold;
+    }
+
+    .user-info{
+      display: inline-block;
+      overflow-wrap: break-word;
+      width: 15em;
     }
 
     .user-info-field input::-webkit-outer-spin-button,
@@ -71,10 +114,18 @@
 
     .user-info-field input{
       width: 15em;
+      height: 24px;
+      padding: 0 1em;
+      border-style: hidden;
+      border-radius: 15px;
       -moz-appearance: textfield;
     }
 
-    button.new-info-input{
+    .center-btns{
+      display: flex;
+      justify-content: center;
+    }
+    .center-btns button{
       margin: 2px; 
     }
   </style>
@@ -96,47 +147,44 @@
     <br><h2>Mi perfil</h2>
     <hr>
     <form action="#" method="POST" id="new-info-form">
+      <div id="photo-col" class="row center-row">
+        <img src="" alt="Foto de perfil" id="profile-photo">
+        <div id="photo-btns">
+          <label for="photo-input" id="photo-input-label" class="new-info-input btn" hidden>Cambiar foto</label>
+        </div>
+        <input type="file" name="img" accept="image/png, image/jpeg" id="photo-input" class="new-info-input" aria-hidden="true" hidden>
+      </div>    
       <div class="row center-row">
-        <div>
-          <img src="" alt="Foto de perfil" id="profile-photo">
-          <input type="file" name="img" accept="image/png, image/jpeg" id="photo-input" class="new-info-input" hidden>
-        </div>    
         <div id="user-info-col" class="text-left">
           <div class="user-info-field">
-            <span class="user-info-tag">Usuario:</span>
-            <span id="username"></span>
+            <div><span class="user-info-tag">Usuario:</span><span id="username"></span></div>
           </div>
           <div class="user-info-field">
-            <span class="user-info-tag">Nombre:</span>
-            <span class="user-info" id="user-name"></span>
-            <input type="text" name="name" id="user-name-input" class="new-info-input" hidden>
+            <div><span class="user-info-tag">Nombre:</span><span class="user-info" id="user-name"></span></div>
+            <input type="text" name="name" id="user-name-input" class="new-info-input" placeholder="Cambiar nombre" hidden>
           </div>
           <div class="user-info-field">
-            <span class="user-info-tag">Apellido:</span>
-            <span class="user-info" id="user-surname"></span>
-            <input type="text" name="surname" id="user-surname-input" class="new-info-input" hidden>
+            <div><span class="user-info-tag">Apellido:</span><span class="user-info" id="user-surname"></span></div>
+            <input type="text" name="surname" id="user-surname-input" class="new-info-input" placeholder="Cambiar apellido" hidden>
           </div>
           <div class="user-info-field">
-            <span class="user-info-tag">Edad:</span>
-            <span class="user-info" id="user-age"></span>
-            <input type="number" name="age" id="user-age-input" min="0" max="150" class="new-info-input" hidden>
+            <div><span class="user-info-tag">Edad:</span><span class="user-info" id="user-age"></span></div>
+            <input type="number" name="age" id="user-age-input" min="0" max="150" class="new-info-input" placeholder="Cambiar edad" hidden>
           </div>
           <div class="user-info-field">
-            <span class="user-info-tag">Email:</span>
-            <span class="user-info" id="user-email"></span>
-            <input type="email" name="email" id="user-email-input" class="new-info-input" hidden>
+            <div><span class="user-info-tag">Email:</span><span class="user-info" id="user-email"></span></div>
+            <input type="email" name="email" id="user-email-input" class="new-info-input" placeholder="Cambiar email" hidden>
           </div>
           <div class="user-info-field">
-            <span class="user-info-tag">Teléfono:</span>
-            <span class="user-info" id="user-telnum"></span>
-            <input type="text" name="telnum" id="user-telnum-input" class="new-info-input" hidden>
+            <div><span class="user-info-tag">Teléfono:</span><span class="user-info" id="user-telnum"></span></div>
+            <input type="text" name="telnum" id="user-telnum-input" class="new-info-input" placeholder="Cambiar teléfono" hidden>
           </div>
         </div>
       </div>
-      <div class="row center-row">
-        <button type="button" id="btn-edit" class="btn btn-primary user-info">Editar datos</button>
-        <button type="submit" class="btn btn-primary new-info-input" hidden>Guardar cambios</button>
-        <button type="reset" class="btn btn-sm btn-secondary new-info-input" hidden>Limpiar</button>
+      <div class="row center-btns">
+        <button type="button" id="btn-edit" class="btn btn-primary user-info">Editar perfil</button>
+        <button type="submit" class="btn btn-success new-info-input" hidden>Guardar cambios</button>
+        <button type="button" id="btn-clear-form" class="btn btn-sm btn-secondary new-info-input" hidden>Limpiar</button>
       </div>
     </form>
   </main>
