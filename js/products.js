@@ -1,5 +1,8 @@
 let productArray = [];
 let orderID = "REL";
+const CARD = "CARD";
+const LIST = "LIST";
+let viewMode = CARD;
 
 function showProductList(){
 
@@ -8,28 +11,56 @@ function showProductList(){
     let sortFiltArray = sortProducts(searchFiltArray);
     
     let htmlContentToAppend = "";
+    if (viewMode === LIST){
+        //mostrar productos en una lista
+        htmlContentToAppend += '<div  class="list-group">';
+
+        sortFiltArray.forEach(product => {
+            htmlContentToAppend += ` 
+            <a href="product-info.html?productid=` + product.name + `" class="list-group-item list-group-item-action">
+                <div class="row">
+                    <div class="col-3">
+                        <img src="` + product.imgSrc + `" alt="` + product.description + `" class="img-thumbnail">
+                    </div>
+                    <div class="col">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h4 class="mb-1">`+ product.name +`</h4>
+                            <span class="price-tag lead">` +  product.currency + ` ` + product.cost + `</span>
+                        </div>
+                        <div class="d-flex w-100 justify-content-between">
+                            <p>` + product.description + `</p>
+                            <small class="soldCount">` +  product.soldCount + ` vendidos</small>
+                        </div>
+                    </div>
+                </div>
+            </a>`;
+        });
+
+        htmlContentToAppend += "</div>";
+    } else {
+        //mostrar los productos en cartas por default
+        sortFiltArray.forEach(product => {
+            htmlContentToAppend += `
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <a href="product-info.html?productid=${product.name}" class="card prod-card list-group-item list-group-item-action">
+                <img src="${product.imgSrc}" alt="${product.description}" class="card-img-top">
+                <div class="card-body">
+                    <h4 class="mb-1">${product.name}</h4>
+                    <span class="price-tag lead">${product.currency} ${product.cost}</span>
+                </div>
+                <p class="card-text">${product.description}</p>
+            </a>
+            </div>
+            `;
+        });
+    }
+    
     for(let i = 0; i < sortFiltArray.length; i++){
         let product = sortFiltArray[i];
+    
+        
 
-        htmlContentToAppend += `
-        <a href="product-info.html?productid=` + product.name + `" class="list-group-item list-group-item-action">
-            <div class="row">
-                <div class="col-3">
-                    <img src="` + product.imgSrc + `" alt="` + product.description + `" class="img-thumbnail">
-                </div>
-                <div class="col">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h4 class="mb-1">`+ product.name +`</h4>
-                        <span class="price-tag lead">` +  product.currency + ` ` + product.cost + `</span>
-                    </div>
-                    <div class="d-flex w-100 justify-content-between">
-                        <p>` + product.description + `</p>
-                        <small class="soldCount">` +  product.soldCount + ` vendidos</small>
-                    </div>
-                </div>
-            </div>
-        </a>
-        `
+        
     }
     document.getElementById("product-list").innerHTML = htmlContentToAppend;
 }
@@ -107,4 +138,12 @@ document.addEventListener("DOMContentLoaded", function (e) {
         showProductList();
     });
     document.getElementById("searchfield").addEventListener("keyup", showProductList);
+    document.getElementById("viewCard").addEventListener("click", function(){
+        viewMode = CARD ;
+        showProductList();
+    });
+    document.getElementById("viewList").addEventListener("click", function(){
+        viewMode = LIST ;
+        showProductList();
+    });
 });

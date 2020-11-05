@@ -166,6 +166,15 @@ a.custom-card:hover {
 .prod-card h4{
   font-size: larger;
 }
+
+.prod-card .card-text{
+  padding: 1em;
+  height: 9em;
+  
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /*star rating in new comment*/
 .new-score{
   font-size: larger;

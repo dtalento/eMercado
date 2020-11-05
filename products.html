@@ -27,7 +27,19 @@
       <p class="lead">Verás aquí el catálogo del sitio.</p>
     </div>
     <div class="container">
-      <div class="row">
+      <div class="row justify-content-between">
+        <div class="col text-left">
+          <div class="btn-group btn-group-toggle mb-4" data-toggle="buttons">
+            <label class="btn btn-light active" id="viewCard" >
+              <input type="radio" name="views" autocomplete="off" checked><i class="fas fa-th"></i>
+            </label>
+            
+            <label class="btn btn-light" id="viewList" >
+              <input type="radio" name="views" autocomplete="off"><i class="fas fa-th-list"></i>
+            </label>
+          </div>
+      </div>
+
           <div class="col text-right">
               <div class="btn-group btn-group-toggle mb-4" data-toggle="buttons">
                 <label class="btn btn-light active" id="sortRelevant" >
@@ -82,11 +94,10 @@
       
       </div>
       
-      <div class="row">
-          <div id="product-list" class="list-group"></div> <!--aqui se muestran los productos-->
+      <div id="product-list" class="row">
+        <!--aqui se muestran los productos-->
       </div>
     </div>
-    <!--div id="product-list" class="container p-5"></div-->
     <footer class="text-muted bg-light">
       <div class="container">
         <p class="float-right">
