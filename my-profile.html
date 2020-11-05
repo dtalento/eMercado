@@ -11,6 +11,7 @@
 
   <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+  <link href="css/font-awesome.min.css" rel="stylesheet">
 
   <style>
     .bd-placeholder-img {
@@ -34,11 +35,10 @@
      justify-content: center; 
      align-items: center;
     }
-    .center-row > div {
-      display: flex;
-      flex-direction: column;
+
+    #photo-col{
+      flex-direction: row;
     }
-    
     #profile-photo{
       max-height: 10em;
       max-width: 10em;
@@ -48,17 +48,19 @@
     }
 
     #photo-btns {
+      max-width: 30px;
       display: flex;
-      flex-direction: row;
-      justify-content: flex-start;
-      min-width: 20%;
-      min-height: 40px;
+      flex-direction: column;
     }
 
     #photo-btns .btn{
-      margin: 2px;
+      font-size: larger;
+      text-align: center;
+      border-radius: 1000px;
       display: inline-block;
-      height: 36px;
+      width: 38px;
+      height: 38px;
+      padding: 4px 8px;
     }
 
     #photo-input{
@@ -150,15 +152,13 @@
       <div id="photo-col" class="row center-row">
         <img src="" alt="Foto de perfil" id="profile-photo">
         <div id="photo-btns">
-          <label for="photo-input" id="photo-input-label" class="new-info-input btn" hidden>Cambiar foto</label>
+          <label for="photo-input" id="photo-input-label" class="new-info-input btn" hidden><i class="fas fa-portrait"></i></label>
+          <input type="file" name="img" accept="image/png, image/jpeg" id="photo-input" class="new-info-input" aria-hidden="true" hidden>
         </div>
-        <input type="file" name="img" accept="image/png, image/jpeg" id="photo-input" class="new-info-input" aria-hidden="true" hidden>
       </div>    
       <div class="row center-row">
+        <h2 id="username"></h2>
         <div id="user-info-col" class="text-left">
-          <div class="user-info-field">
-            <div><span class="user-info-tag">Usuario:</span><span id="username"></span></div>
-          </div>
           <div class="user-info-field">
             <div><span class="user-info-tag">Nombre:</span><span class="user-info" id="user-name"></span></div>
             <input type="text" name="name" id="user-name-input" class="new-info-input" placeholder="Cambiar nombre" hidden>

@@ -113,7 +113,7 @@ function previewPhoto(){
             let resetBtn = document.createElement("button");
             resetBtn.id = "btn-restore-photo";
             resetBtn.className = "btn btn-sm btn-secondary";
-            resetBtn.innerHTML = "Cancelar";
+            resetBtn.innerHTML = '<i class="fas fa-undo"></i>';
             document.getElementById("photo-btns").appendChild(resetBtn);
             resetBtn.addEventListener("click", () => {
                 //restaura la anterior foto de perfil y vacia el input
