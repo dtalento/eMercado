@@ -23,48 +23,92 @@ var logInDone = function(userData){
   }
 }
 
-var logInValidation = function(){
-  loginForm = document.getElementById("login-form");
-  loginForm.addEventListener("submit", function(event){
-    event.preventDefault();
-    
-    //Validacion de los datos de la forma
-    if (loginForm.usuario.value !== "" && loginForm.pwd.value !== ""){
-      //Accion en caso de datos no vacios
-      let userData = {
-        username : loginForm.usuario.value ,
-        password : loginForm.pwd.value ,
-      }
+var onGoogleLoad = function () {
+  //Setup Google OAuth2 cuando cargue la api (que esta en el head)
+  gapi.load('auth2', function () {
+    googleAuth = gapi.auth2.init({
+      client_id: '248596847490-dldboe8r0m1qodiem693m103clqdi4qo.apps.googleusercontent.com',
+      scope: 'profile email', 
+      redirect_uri: 'products.html'
+    });
 
-      if (localStorage.getItem(USER_ARRAY) === null){
-        //en caso de que no haya un registro crearlo y logearlo
-        localStorage.setItem(USER_ARRAY, JSON.stringify([userData]) );
-        logInDone(userData);
-      } else {
-        //de lo contrario buscarlo buscar en el registro
-        
-        if (userValidation(userData)){
-          // en caso de datos validos o registro nuevo, logearlo
-          logInDone(userData);
-        } else {
-          //Datos invalidos: usuario existe pero el password es incorrecto
-          //TODO: cambiar password
-          if (document.getElementById("passalert") == null){ 
-            //crear la alerta solo la primera vez
-            passAlert = document.createElement("p");
-            passAlert.id = "passalert" ;
-            passAlert.className = "alert alert-danger" ;
-            passAlert.innerHTML = "Datos inválidos" ;
-            loginForm.appendChild(passAlert);
-          }
-          
-        }
+    //Dibujar el boton en div con id="google_button"
+    gapi.signin2.render("google-button", {
+      scope: 'profile email',
+      //las mismas dimensiones que el botón submit
+      width:  document.getElementById("submit-button").getBoundingClientRect().width, 
+      height: document.getElementById("submit-button").getBoundingClientRect().height,
+      longtitle: true,
+      theme: 'dark',
+      onsuccess: onGoogleSignIn,
+    });
 
-      }  
-    } else {
-      //Accion en caso de datos vacios
+  });
+}
+
+
+var onGoogleSignIn = function(googleUser){
+  //Obtiene los datos de perfil del google sign in y hace la validacion
+
+  let profile = googleUser.getBasicProfile();
+  let userData = {
+    loginType : "google",
+    username : profile.getName(),
+    gmail : profile.getEmail(),
+  }    
+  document.getElementById("google-button").addEventListener("click", () => logInValidation(userData));
+}
+
+var onLocalLogin = function(event){
+  //Obtiene los datos y valida el login local
+
+  event.preventDefault();
+  //Si se lleno la forma validar los datos
+  if (loginForm.usuario.value !== "" && loginForm.pwd.value !== ""){
+    //Accion en caso de datos no vacios
+    let userData = {
+      loginType : "local",
+      username : loginForm.usuario.value ,
+      password : loginForm.pwd.value ,
     }
-  })
+    logInValidation(userData);
+  }
+}
+
+var logInRedirect = function(){
+  //Si volvemos al login luego de estar loggeados ir al index
+  if (window.location.href.endsWith("login.html") &&
+      sessionStorage.getItem("loginFlag") == "true"){
+      window.location.href = "index.html" ;
+    }
+}
+
+var logInValidation = function(userData){
+  //Busca los datos en el registro de usuarios o los agrega
+  
+  if (localStorage.getItem(USER_ARRAY) === null){
+    //en caso de que no haya un registro crearlo y logearlo
+    localStorage.setItem(USER_ARRAY, JSON.stringify([userData]) );
+    logInDone(userData);
+  } else {
+    //de lo contrario buscarlo buscar en el registro
+    if (userValidation(userData)){
+      // en caso de datos validos o registro nuevo, logearlo
+      logInDone(userData);
+    } else {
+      //Datos invalidos: usuario existe pero el password es incorrecto
+      //TODO: cambiar password
+      if (document.getElementById("passalert") == null){ 
+        //crear la alerta solo la primera vez
+        passAlert = document.createElement("p");
+        passAlert.id = "passalert" ;
+        passAlert.className = "alert alert-danger" ;
+        passAlert.innerHTML = "Datos inválidos" ;
+        loginForm.appendChild(passAlert);
+      } 
+    }
+  
+  }   
 }
 
 var userValidation = function(userData){
@@ -77,8 +121,8 @@ var userValidation = function(userData){
     localStorage.setItem(USER_ARRAY, JSON.stringify(userArray) );
     return true ; //los nuevos datos son validos
   } else {
-    //los datos son validos si el password es correcto
-    return userData.password == userArray[index].password ;
+    //los datos son validos si el password es correcto o es un login con google
+    return userData.loginType === "google"  || userData.password == userArray[index].password ;
   }
 }
 
@@ -86,5 +130,6 @@ var userValidation = function(userData){
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e){
-  logInValidation();
+  loginForm = document.getElementById("login-form");
+  loginForm.addEventListener("submit", onLocalLogin);
 });
