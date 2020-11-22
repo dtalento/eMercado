@@ -246,7 +246,7 @@ function buyCart(event){
                 artIDInput.name = "articlesID";
                 //pasamos los nombres de los articulos con count > 0 a un string y lo ponemos en un input
                 //oculto al final de la forma
-                artIDInput.value = JSON.stringify( articles.filter(art => art.count > 0).map(art => art.name) );
+                artIDInput.value = JSON.stringify( articles.filter(art => art.count > 0) );
                 document.getElementById("buy-form").appendChild(artIDInput);
 
                 document.getElementById("buy-form").submit();
