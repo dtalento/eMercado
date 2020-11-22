@@ -54,14 +54,6 @@ function showProductList(){
             `;
         });
     }
-    
-    for(let i = 0; i < sortFiltArray.length; i++){
-        let product = sortFiltArray[i];
-    
-        
-
-        
-    }
     document.getElementById("product-list").innerHTML = htmlContentToAppend;
 }
 
